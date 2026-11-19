@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/area.js"></script>
+  <title>Pedidos · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=1792164060">
+  <link rel="stylesheet" href="css/tema.css?v=1792164060">
+  <link rel="stylesheet" href="css/cobro.css">
+  <link rel="stylesheet" href="css/ticket.css">
+  <link rel="stylesheet" href="css/pedidos.css?v=1792164060">
+</head>
+<body class="tema pedidos">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="shell">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <img src="assets/ranchenatos_isotipo.svg" alt="">
+    <strong>Ranchenatos</strong>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+    <nav aria-label="Principal">
+      <div class="nav-label">Operación</div>
+      <ul class="nav">
+        <li><a href="inicio.html"><img class="ico" src="icons/inicio.svg" alt="">Inicio</a></li>
+        <li><a href="pedidos.html" aria-current="page"><img class="ico" src="icons/pedidos.svg" alt="">Pedidos</a></li>
+        <li><a href="mesas.html"><img class="ico" src="icons/mesas.svg" alt="">Mesas</a></li>
+        <li><a href="reservas.html"><img class="ico" src="icons/reserva.svg" alt="">Reservaciones</a></li>
+        <li><a href="despacho.html"><img class="ico" src="icons/inicio/en_preparacion.svg" alt="">Despacho</a></li>
+        <li><a href="caja.html"><img class="ico" src="icons/efectivo.svg" alt="">Caja</a></li>
+      </ul>
+      <div class="nav-label">Catálogo</div>
+      <ul class="nav">
+        <li><a href="productos.html"><img class="ico" src="icons/productos.svg" alt="">Productos y recetas</a></li>
+        <li><a href="inventario.html"><img class="ico" src="icons/inventario.svg" alt="">Inventario<span class="count" aria-label="1 alerta">1</span></a></li>
+        <li><a href="eventos.html"><img class="ico" src="icons/calendario.svg" alt="">Eventos y promociones</a></li>
+      </ul>
+      <div class="nav-label">Gestión</div>
+      <ul class="nav">
+        <li><a href="clientes.html"><img class="ico" src="icons/clientes.svg" alt="">Clientes</a></li>
+        <li><a href="reportes.html"><img class="ico" src="icons/reportes.svg" alt="">Reportes</a></li>
+        <li><a href="usuarios.html"><img class="ico" src="icons/usuarios.svg" alt="">Usuarios y roles</a></li>
+      </ul>
+    </nav>
+    <div class="userbox">
+      <strong>Carlos Ranchenatos</strong>Administrador
+      <button class="btn btn-sm" id="btn-tema" type="button">Modo claro u oscuro</button>
+      <button class="enlace" id="btn-reiniciar" type="button">Restablecer datos de ejemplo</button>
+    </div>
+  </aside>
+
+  <main class="main" id="contenido">
+    <header class="encabezado">
+      <h1 class="sr-only">Pedidos</h1>
+      <p class="intro">Pedidos</p>
+    </header>
+    <div class="pos">
+      <section class="carta" aria-label="Carta">
+        <div class="mesas-wrap" id="mesas-wrap">
+          <div class="mesas" id="mesas" aria-label="Mesas"></div>
+        </div>
+        <div class="carta-barra" id="carta-barra"><div class="barra-in" id="barra-in">
+          <button type="button" class="titulo-mesa barra-mesa" id="barra-mesa" aria-haspopup="listbox"><span id="barra-mesa-txt">Pedido mesa 1</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="search"><label for="buscar-producto" class="sr-only">Buscar productos</label><img class="ico" src="icons/buscar.svg" alt=""><input id="buscar-producto" type="search" placeholder="Buscar producto"></div>
+          <div class="chips" id="chips"></div>
+        </div></div>
+        <div class="productos" id="productos"></div>
+      </section>
+      <p class="ticket-etiqueta fuera"><span class="ticket-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>Ticket</p>
+      <section class="ticket" id="ticket" aria-label="Pedido de la mesa">
+        <button type="button" class="cerrar-ticket" id="cerrar-ticket" aria-label="Cerrar el ticket" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="ticket-scroll">
+        <header class="ticket-cab">
+          <div><p class="ticket-etiqueta dentro"><span class="ticket-icono"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>Ticket</p><h2 id="titulo-pedido">Mesa 1</h2><p class="hint" id="sub-pedido"></p></div>
+        </header>
+        <ul class="lineas" id="lineas"></ul>
+        <button type="button" class="otro-producto" id="otro-producto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Añadir otro producto</button>
+        <div class="ticket-pie">
+          <div class="total-line"><span>Subtotal</span><span id="subtotal">$ 0</span></div>
+          <div class="total-line"><span>Impuestos</span><span id="impuesto">$ 0</span></div>
+          <button type="button" class="btn btn-block" id="btn-despachar-todo" hidden>Despachar todo</button>
+          <p class="msg" id="msg-pedido" role="status"></p>
+        </div>
+        </div>
+        <div class="ticket-total">
+          <div class="total-line big"><span>Total</span><span id="total">$ 0</span></div>
+          <button type="button" class="btn btn-primary btn-block" id="btn-enviar" hidden>Confirmar pedido</button>
+          <button type="button" class="btn btn-primary btn-block" id="btn-cobrar">Cobrar</button>
+          <p class="hint motivo" id="motivo-cobro" role="status"></p>
+        </div>
+      </section>
+    </div>
+    <button type="button" class="canasta" id="btn-canasta" aria-controls="ticket" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-2 10a2 2 0 0 1-2 1.6H7A2 2 0 0 1 5 19L3 9z"/><path d="M8 9l3-5M16 9l-3-5"/></svg>
+      <span class="canasta-info"><b id="canasta-mesa">Mesa 1</b><span id="canasta-total">$ 0</span></span>
+      <span class="canasta-n" id="canasta-n">0</span>
+    </button>
+    <div class="ticket-fondo" id="ticket-fondo"></div>
+    <div class="lista-mesas" id="lista-mesas" role="listbox" aria-label="Elegir mesa" hidden></div>
+    <dialog class="dialogo dlg-quitar dlg-confirmar" id="dlg-confirmar" aria-labelledby="cf-titulo">
+      <h2 id="cf-titulo">Confirma el pedido con el cliente</h2>
+      <p id="cf-mesa"></p>
+      <ul class="cf-lista" id="cf-lista"></ul>
+      <p class="cf-total" id="cf-total"></p>
+      <div class="q-botones"><button type="button" class="btn" id="cf-volver">Regresar</button><button type="button" class="btn btn-primary" id="cf-enviar">Sí, enviar</button></div>
+    </dialog>
+    <dialog class="dialogo dlg-quitar" id="dlg-quitar" aria-labelledby="q-titulo">
+      <h2 id="q-titulo">Quitar producto</h2>
+      <p id="q-texto">¿Quitar el producto del pedido?</p>
+      <div class="q-botones"><button type="button" class="btn" id="q-cancelar">No, dejarlo</button><button type="button" class="btn btn-primary" id="q-si">Sí, quitarlo</button></div>
+    </dialog>
+  </main>
+</div>
+<script src="js/datos.js?v=1792164060"></script>
+<script src="js/main.js?v=1792164060"></script>
+<script src="js/facturacion.js"></script>
+<script src="js/cobro.js"></script>
+<script src="js/ticket.js"></script>
+<script src="js/pedidos.js?v=1792164060"></script>
+</body>
+</html>

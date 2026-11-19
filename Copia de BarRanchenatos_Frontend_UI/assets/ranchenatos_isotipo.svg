@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="brand" x1="18" y1="15" x2="110" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/><stop offset=".55" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="44" y1="9" x2="83" y2="38" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDE68A"/><stop offset="1" stop-color="#D4AF37"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="#0F172A"/>
+  <path d="M22 42C31 29 42 25 64 25s33 4 42 17" stroke="url(#brand)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M40 32 35 17l14 9 15-18 15 18 14-9-5 15" fill="url(#gold)" stroke="#D4AF37" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M37 48c9-9 17-13 27-13s18 4 27 13l-5 7H42l-5-7Z" fill="#111827" stroke="url(#gold)" stroke-width="2.5"/>
+  <path d="M44 43 84 52 M40 48 79 56" stroke="#FDE68A" stroke-width="1.5"/>
+  <text x="64" y="91" text-anchor="middle" fill="#F8FAFC" font-family="Arial, sans-serif" font-weight="800" font-size="51">R</text>
+  <path d="M31 103c11 7 22 9 33 2 11 7 22 5 33-2" stroke="url(#brand)" stroke-width="3" stroke-linecap="round"/>
+</svg>

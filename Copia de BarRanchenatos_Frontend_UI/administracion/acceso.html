@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bar Ranchenatos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/tema.css" />
+    <link rel="stylesheet" href="../css/areas.css" />
+    <script src="js/area.js"></script>
+    <script>
+      try {
+        if (localStorage.getItem("tema"))
+          document.documentElement.setAttribute(
+            "data-theme",
+            localStorage.getItem("tema"),
+          );
+      } catch (e) {
+        /* sin memoria del navegador */
+      }
+    </script>
+  </head>
+
+  <body class="tema selector">
+    <main class="entrada" id="contenido">
+      <header class="entrada-marca">
+        <img src="../assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos" />
+        <p>RANCHENATOS</p>
+      </header>
+      <h1 id="en-titulo"></h1>
+      <p class="entrada-ayuda" id="en-ayuda"></p>
+      <div class="areas" id="en-lista" role="group"></div>
+      <div class="entrada-pie" id="en-pie"></div>
+    <footer class="cliente-pie">
+        <a href="../index.html">Volver al inicio</a>
+        <p>Bar Ranchenatos · Vive la tradición</p>
+    </footer>
+
+    </main>
+    <script src="../js/area.js"></script>
+    <script src="../js/datos.js"></script>
+    <script src="../js/entrada.js"></script>
+  </body>
+</html>

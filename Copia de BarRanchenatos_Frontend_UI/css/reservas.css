@@ -1,0 +1,61 @@
+/* Reservaciones: usa el estilo de Inicio, Pedidos y Mesas (azul marino, gris y celeste, cajas con borde fino). */
+
+body.reservas-pag { --sel: #7FC4CE; }
+:root[data-theme="oscuro"] body.reservas-pag { --sel: #9DB5F0; }
+body.reservas-pag .main { display: grid; gap: 1.1rem; align-content: start; grid-template-columns: minmax(0, 1fr); max-width: 80rem; }
+body.reservas-pag .encabezado .actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+body.reservas-pag .encabezado .btn { border-color: var(--marco); border-radius: 10px; min-height: 42px; background: var(--cristal); color: var(--text); }
+body.reservas-pag .encabezado .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+#r-aviso:empty { display: none; }
+#r-aviso { margin: 0; padding: .65rem .9rem; background: var(--bloque); border-radius: 12px; font-size: .9rem; }
+
+/* Detalle */
+.det-res { display: grid; gap: .9rem; text-align: center; }
+.det-cab { display: grid; justify-items: center; gap: .35rem; }
+.det-sup { margin: 0; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.det-cab h2 { margin: 0; font-size: 1.7rem; line-height: 1.15; overflow-wrap: anywhere; }
+.det-cab .est-res { padding: .25rem .8rem; border: 1px solid var(--marco); border-radius: 999px; font-size: .85rem; font-weight: 600; background: var(--cristal); }
+.det-cuando { display: grid; justify-items: center; gap: .15rem; padding: .7rem 0; border-block: 1px dashed var(--marco); }
+.det-cuando b { font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.det-cuando span { font-size: .85rem; color: var(--muted); }
+.det-datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: .6rem; margin: 0; }
+.det-datos div { display: grid; align-content: center; justify-items: center; gap: .15rem; padding: .6rem .7rem; background: var(--bloque); border-radius: 12px; }
+.det-datos dt { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.det-datos dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.det-datos small { display: block; margin-top: .15rem; font-weight: 400; font-size: .78rem; color: var(--muted); }
+.det-datos .ancho { grid-column: 1 / -1; }
+.det-botones { position: sticky; bottom: 0; display: grid; gap: .6rem; padding-top: .7rem; background: var(--bg); }
+.det-prin, .det-sec { display: flex; flex-wrap: wrap; gap: .6rem; }
+.det-prin .btn, .det-sec .btn { flex: 1 1 8rem; min-height: 2.6rem; border-color: var(--marco); border-radius: 10px; background: var(--cristal); color: var(--text); font-weight: 600; }
+.det-prin .btn { min-height: 3rem; }
+.det-botones .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+.det-baja { display: flex; justify-content: center; gap: 1.6rem; }
+.det-baja .btn { min-height: 2rem; padding: .1rem .3rem; border: 0; background: none; color: var(--muted); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.det-baja .btn:hover { color: var(--text); }
+.det-hist { border-top: 1px dashed var(--line); padding-top: .7rem; text-align: left; }
+.det-hist summary { cursor: pointer; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: center; }
+.det-hist ul { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .3rem; font-size: .85rem; }
+.det-hist li { display: grid; grid-template-columns: 6.6rem 1fr; gap: .5rem; padding: .25rem 0; border-bottom: 1px dashed var(--line); }
+.det-hist li span { color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 34rem) { .det-botones { position: static; } .det-datos { grid-template-columns: 1fr 1fr; } .det-datos div { min-width: 0; padding: .5rem .5rem; } .det-res { gap: .7rem; } .det-cab h2 { font-size: 1.4rem; } .det-cuando b { font-size: 2.1rem; } .det-sec .btn { flex-basis: 100%; min-height: 2.5rem; } }
+
+/* Celular: cada grupo de filtros va en una sola fila que se desliza, para dejar el espacio a las reservaciones */
+@media (max-width: 640px) {
+  body.reservas-pag .filtro-grupo { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: .15rem .1rem; }
+  body.reservas-pag .filtro-grupo::-webkit-scrollbar { display: none; }
+  body.reservas-pag .filtro-grupo > * { flex: none; }
+}
+#r-tabla { padding-bottom: 5rem; }
+
+.campo-pedido { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; padding: .7rem .9rem; background: var(--bloque); border-radius: 12px; text-align: left; }
+.campo-pedido small { display: block; font-size: .78rem; color: var(--muted); }
+.pd-lista { max-height: 50vh; overflow-y: auto; display: grid; gap: .1rem; text-align: left; }
+.pd-lista .grupo-w { margin: .8rem 0 .3rem; }
+.pd-fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .4rem 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
+.pd-fila small { display: block; color: var(--muted); }
+.pd-cant { display: inline-flex; align-items: center; gap: .5rem; }
+.pd-cant button { width: 2.2rem; height: 2.2rem; padding: 0; font: inherit; font-size: 1.2rem; line-height: 1; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 50%; cursor: pointer; }
+.pd-cant button:disabled { opacity: .35; cursor: default; }
+.pd-cant b { min-width: 1.4rem; text-align: center; font-variant-numeric: tabular-nums; }
+.pd-total { margin: 0; font-weight: 700; text-align: right; }
+.pd-vacio { color: var(--muted); }

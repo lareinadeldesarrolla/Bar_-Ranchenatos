@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/area.js"></script>
+  <title>Administrar mesas · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=1792166594">
+  <link rel="stylesheet" href="css/tema.css?v=1792166594">
+  <link rel="stylesheet" href="css/widgets.css?v=1792166957">
+  <link rel="stylesheet" href="css/mesas.css?v=1792166776">
+</head>
+<body class="tema mesas-pag mesas-admin">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="shell">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <img src="assets/ranchenatos_isotipo.svg" alt="">
+    <strong>Ranchenatos</strong>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+    <nav aria-label="Principal">
+      <div class="nav-label">Operación</div>
+      <ul class="nav">
+        <li><a href="inicio.html"><img class="ico" src="icons/inicio.svg" alt="">Inicio</a></li>
+        <li><a href="pedidos.html"><img class="ico" src="icons/pedidos.svg" alt="">Pedidos</a></li>
+        <li><a href="mesas.html" aria-current="page"><img class="ico" src="icons/mesas.svg" alt="">Mesas</a></li>
+        <li><a href="reservas.html"><img class="ico" src="icons/reserva.svg" alt="">Reservaciones</a></li>
+        <li><a href="despacho.html"><img class="ico" src="icons/inicio/en_preparacion.svg" alt="">Despacho</a></li>
+        <li><a href="caja.html"><img class="ico" src="icons/efectivo.svg" alt="">Caja</a></li>
+      </ul>
+      <div class="nav-label">Catálogo</div>
+      <ul class="nav">
+        <li><a href="productos.html"><img class="ico" src="icons/productos.svg" alt="">Productos y recetas</a></li>
+        <li><a href="inventario.html"><img class="ico" src="icons/inventario.svg" alt="">Inventario<span class="count" aria-label="1 alerta">1</span></a></li>
+        <li><a href="eventos.html"><img class="ico" src="icons/calendario.svg" alt="">Eventos y promociones</a></li>
+      </ul>
+      <div class="nav-label">Gestión</div>
+      <ul class="nav">
+        <li><a href="clientes.html"><img class="ico" src="icons/clientes.svg" alt="">Clientes</a></li>
+        <li><a href="reportes.html"><img class="ico" src="icons/reportes.svg" alt="">Reportes</a></li>
+        <li><a href="usuarios.html"><img class="ico" src="icons/usuarios.svg" alt="">Usuarios y roles</a></li>
+      </ul>
+    </nav>
+    <div class="userbox">
+      <strong>Carlos Ranchenatos</strong>Administrador
+      <button class="btn btn-sm" id="btn-tema" type="button">Modo claro u oscuro</button>
+      <button class="enlace" id="btn-reiniciar" type="button">Restablecer datos de ejemplo</button>
+    </div>
+  </aside>
+
+  <main class="main" id="contenido">
+    <header class="encabezado">
+      <h1 class="sr-only">Administrar mesas</h1>
+      <p class="intro">Administrar mesas</p>
+      <div class="actions"><a class="btn" href="mesas.html">← Volver a Mesas</a></div>
+    </header>
+
+    <p class="msg" id="a-aviso" role="status"></p>
+
+    <div class="admin-grid">
+      <section class="panel-admin panel-mesas" aria-labelledby="a-titulo">
+        <h2 id="a-titulo" class="sr-only">Mesas</h2>
+        <div class="gest-caja" id="a-tabla"></div>
+        <div class="leyenda-adm" aria-label="Colores del plano"><span><i class="lg libre"></i>Libre</span><span><i class="lg ocupada"></i>Ocupada</span><span><i class="lg reservada"></i>Reservada</span><span><i class="lg inactiva"></i>Inactiva</span><button type="button" class="btn btn-primary" id="a-nueva">+ Nueva mesa</button></div>
+      </section>
+    </div>
+
+    <dialog class="dlg-detalle dlg-mesa" id="dlg-mesa" aria-labelledby="m-titulo">
+      <button type="button" class="cerrar-x" id="m-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <form id="form-mesa" class="form-admin" novalidate>
+        <h2 id="m-titulo"><span id="m-titulo-texto">Nueva mesa</span></h2>
+        <div class="vista-previa" id="a-previa" aria-hidden="true"></div>
+        <div class="campos-admin">
+          <div class="field"><label for="m_numero">Número de mesa</label><input id="m_numero" name="m_numero" type="number" min="1" step="1" inputmode="numeric" required></div>
+          <div class="field"><label for="m_capacidad">Puestos (capacidad)</label><input id="m_capacidad" name="m_capacidad" type="number" min="1" max="30" step="1" inputmode="numeric" required></div>
+          <div class="field campo-zona">
+            <span class="etiqueta-campo" id="m-zona-etiqueta">Zona</span>
+            <input type="hidden" id="m_zona" name="m_zona">
+            <div class="chips-zona" id="m-zona-chips" role="radiogroup" aria-labelledby="m-zona-etiqueta"></div>
+            <div class="zona-acciones">
+              <button type="button" class="enlace" id="mz-crear">+ Crear zona</button>
+              <button type="button" class="enlace" id="mz-renombrar">Renombrar</button>
+              <button type="button" class="enlace" id="mz-eliminar">Eliminar zona</button>
+            </div>
+            <div class="zona-nueva" id="mz-panel" hidden>
+              <input id="mz_nombre" type="text" maxlength="40" placeholder="Nombre de la zona" aria-label="Nombre de la zona">
+              <button type="button" class="btn btn-sm btn-primary" id="mz-aceptar">Crear</button>
+              <button type="button" class="btn btn-sm" id="mz-cancelar">Cancelar</button>
+            </div>
+            <div class="zona-pregunta" id="mz-pregunta" hidden>
+              <span id="mz-pregunta-texto"></span>
+              <button type="button" class="btn btn-sm btn-primary" id="mz-si">Sí, eliminar</button>
+              <button type="button" class="btn btn-sm" id="mz-no">No</button>
+            </div>
+          </div>
+        </div>
+        <p class="field-error" id="m-error" role="alert"></p>
+        <div class="acciones-admin"><button type="button" class="btn" id="m-cancelar">Cancelar</button><button type="submit" class="btn btn-primary" id="m-guardar">Guardar mesa</button></div>
+      </form>
+    </dialog>
+  </main>
+</div>
+<script src="js/datos.js?v=1792166594"></script>
+<script src="js/main.js?v=1792166594"></script>
+<script src="js/mesas-admin.js?v=1792166936"></script>
+</body>
+</html>

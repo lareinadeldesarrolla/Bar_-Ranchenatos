@@ -1,0 +1,41 @@
+/* Productos y recetas: mismo estilo de Reservaciones y Caja (widgets, categorías en chips, ventanas con la X por fuera). */
+body.productos-pag { --sel: #7FC4CE; }
+:root[data-theme="oscuro"] body.productos-pag { --sel: #9DB5F0; }
+body.productos-pag .main { display: grid; gap: 1.1rem; align-content: start; grid-template-columns: minmax(0, 1fr); }
+body.productos-pag .encabezado .actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+body.productos-pag .encabezado .btn { border-color: var(--marco); border-radius: 10px; min-height: 42px; background: var(--cristal); color: var(--text); }
+body.productos-pag .encabezado .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+#p-aviso:empty { display: none; }
+#p-aviso { margin: 0; padding: .65rem .9rem; background: var(--bloque); border-radius: 12px; font-size: .9rem; }
+.w-producto .w-valor { font-size: 1rem; }
+.w-producto .w-cab img { width: 1.2rem; height: 1.2rem; }
+.w-producto .w-cab b { font-size: .72rem; }
+.rec-filas { display: grid; gap: .5rem; text-align: left; }
+.rec-fila { display: grid; grid-template-columns: minmax(0, 1fr) 7rem auto; gap: .5rem; align-items: center; }
+.rec-fila select, .rec-fila input { min-width: 0; box-sizing: border-box; min-height: 2.7rem; padding: 0 .7rem; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+@media (max-width: 480px) { .rec-fila { grid-template-columns: 1fr 5.5rem; } .rec-fila .btn-fila { grid-column: 1 / -1; } }
+.pasos { margin: 0; padding-left: 1.4rem; display: grid; gap: .4rem; text-align: left; font-size: .92rem; }
+.sin-pasos { margin: 0; text-align: left; font-size: .9rem; color: var(--muted); }
+
+/* Receta o inventario de un producto: una fila por insumo con lo que descuenta, su costo y cuánto hay */
+.rec-tabla { display: grid; text-align: left; border: 1px solid var(--line); border-radius: 12px; overflow: clip; }
+.rt-cab, .rt-fila { display: grid; grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr)); gap: .8rem; align-items: center; padding: .65rem 1rem; }
+.rt-cab { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--bloque); }
+.rt-fila { font-size: .92rem; border-top: 1px solid var(--line); }
+.rt-nombre { font-weight: 600; overflow-wrap: anywhere; }
+.rt-dato { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .5rem; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) {
+  .rt-cab { display: none; }
+  .rt-fila { grid-template-columns: 1fr 1fr; gap: .3rem .8rem; }
+  .rt-nombre { grid-column: 1 / -1; }
+  .rt-dato::before { content: attr(data-t); display: block; width: 100%; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+}
+
+/* Receta y preparación lado a lado cuando hay espacio, para que todo se vea sin desplazarse */
+.prod-cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 1.4rem; align-items: start; text-align: left; }
+.prod-cols.una { grid-template-columns: 1fr; }
+.prod-cols .tk-sub { margin: 0 0 .5rem; }
+.rt-cab, .rt-fila { padding: .5rem .8rem; gap: .6rem; }
+@media (max-width: 800px) { .prod-cols { grid-template-columns: 1fr; } }
+.prod-foto { height: 9rem; border-radius: 14px; overflow: hidden; background: var(--bloque); }
+.prod-foto img { width: 100%; height: 100%; object-fit: contain; display: block; }

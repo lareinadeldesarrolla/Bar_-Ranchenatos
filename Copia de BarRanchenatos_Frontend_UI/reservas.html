@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/area.js"></script>
+  <title>Reservaciones · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=1792164060">
+  <link rel="stylesheet" href="css/tema.css?v=1792164060">
+  <link rel="stylesheet" href="css/widgets.css?v=1792166957">
+  <link rel="stylesheet" href="css/reservas.css?v=1792168442">
+</head>
+<body class="tema reservas-pag">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="shell">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <img src="assets/ranchenatos_isotipo.svg" alt="">
+    <strong>Ranchenatos</strong>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+    <nav aria-label="Principal">
+      <div class="nav-label">Operación</div>
+      <ul class="nav">
+        <li><a href="inicio.html"><img class="ico" src="icons/inicio.svg" alt="">Inicio</a></li>
+        <li><a href="pedidos.html"><img class="ico" src="icons/pedidos.svg" alt="">Pedidos</a></li>
+        <li><a href="mesas.html"><img class="ico" src="icons/mesas.svg" alt="">Mesas</a></li>
+        <li><a href="reservas.html" aria-current="page"><img class="ico" src="icons/reserva.svg" alt="">Reservaciones</a></li>
+        <li><a href="despacho.html"><img class="ico" src="icons/inicio/en_preparacion.svg" alt="">Despacho</a></li>
+        <li><a href="caja.html"><img class="ico" src="icons/efectivo.svg" alt="">Caja</a></li>
+      </ul>
+      <div class="nav-label">Catálogo</div>
+      <ul class="nav">
+        <li><a href="productos.html"><img class="ico" src="icons/productos.svg" alt="">Productos y recetas</a></li>
+        <li><a href="inventario.html"><img class="ico" src="icons/inventario.svg" alt="">Inventario<span class="count" aria-label="1 alerta">1</span></a></li>
+        <li><a href="eventos.html"><img class="ico" src="icons/calendario.svg" alt="">Eventos y promociones</a></li>
+      </ul>
+      <div class="nav-label">Gestión</div>
+      <ul class="nav">
+        <li><a href="clientes.html"><img class="ico" src="icons/clientes.svg" alt="">Clientes</a></li>
+        <li><a href="reportes.html"><img class="ico" src="icons/reportes.svg" alt="">Reportes</a></li>
+        <li><a href="usuarios.html"><img class="ico" src="icons/usuarios.svg" alt="">Usuarios y roles</a></li>
+      </ul>
+    </nav>
+    <div class="userbox">
+      <strong>Carlos Ranchenatos</strong>Administrador
+      <button class="btn btn-sm" id="btn-tema" type="button">Modo claro u oscuro</button>
+      <button class="enlace" id="btn-reiniciar" type="button">Restablecer datos de ejemplo</button>
+    </div>
+  </aside>
+
+  <main class="main" id="contenido">
+    <header class="encabezado con-filtros">
+      <h1 class="sr-only">Reservaciones</h1>
+      <p class="intro">Reservaciones</p>
+      <div class="res-filtros" id="r-filtros" role="group" aria-label="Filtrar reservaciones"></div>
+    </header>
+
+    <p class="msg" id="r-aviso" role="status"></p>
+    <button type="button" class="btn btn-primary fab" id="r-nueva" aria-label="Nueva reservación">+ Nueva</button>
+
+    <section class="lista-res" aria-labelledby="r-titulo">
+      <h2 id="r-titulo" class="sr-only">Lista de reservaciones</h2>
+      <div id="r-tabla"></div>
+    </section>
+
+    <!-- Detalle de la reservación -->
+    <dialog class="dlg-res dlg-ancha" id="dlg-detalle" aria-label="Detalle de la reservación">
+      <button type="button" class="cerrar-x" id="d-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div id="d-cuerpo"></div>
+    </dialog>
+
+    <!-- Nueva o editar -->
+    <dialog class="dlg-res" id="dlg-form" aria-labelledby="f-titulo">
+      <button type="button" class="cerrar-x" id="f-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <form id="form-res" class="form-res" novalidate>
+        <h2 id="f-titulo">Nueva reservación</h2>
+        <div class="campo"><span class="etiqueta-campo" id="f-tipo-etq">Tipo</span>
+          <div class="chips-res" id="f-tipo" role="radiogroup" aria-labelledby="f-tipo-etq">
+            <button type="button" class="chip-res" role="radio" data-tipo="MESA" aria-pressed="true">Mesa</button>
+            <button type="button" class="chip-res" role="radio" data-tipo="EVENTO" aria-pressed="false">Evento</button>
+          </div>
+        </div>
+        <div class="grid-res">
+          <div class="campo"><label for="f_cliente">Cliente</label><input id="f_cliente" name="cliente" type="text" maxlength="60" list="f-clientes" required autocomplete="off"><datalist id="f-clientes"></datalist></div>
+          <div class="campo"><label for="f_telefono">Teléfono</label><input id="f_telefono" name="telefono" type="tel" maxlength="20" inputmode="tel" placeholder="Para confirmar la reservación"></div>
+          <div class="campo"><label for="f_fecha">Fecha</label><input id="f_fecha" name="fecha" type="date" required></div>
+          <div class="campo"><label for="f_hora">Hora</label><input id="f_hora" name="hora" type="time" required></div>
+          <div class="campo"><label for="f_personas">Personas</label><input id="f_personas" name="personas" type="number" min="1" max="30" step="1" inputmode="numeric" required></div>
+          <div class="campo"><label for="f_mesa">Mesa</label><select id="f_mesa" name="mesa" required></select></div>
+          <div class="campo campo-evento" id="f-campo-evento" hidden><label for="f_evento">Evento</label><input id="f_evento" name="evento" type="text" maxlength="60" list="f-eventos" autocomplete="off" placeholder="Noche Ranchera, Viernes Vallenato…"><datalist id="f-eventos"><option value="Noche Ranchera"><option value="Viernes Vallenato"></datalist></div>
+          <div class="campo campo-ancho"><label for="f_obs">Observaciones</label><input id="f_obs" name="obs" type="text" maxlength="160" placeholder="Cumpleaños, alergias, decoración…"></div>
+        </div>
+        <div class="campo-pedido">
+          <div id="f-pedido-resumen"></div>
+          <button type="button" class="btn btn-sm" id="f-pedido-abrir">Agregar pedido</button>
+        </div>
+        <p class="f-error" id="f-error" role="alert"></p>
+        <div class="acciones-res"><button type="button" class="btn" id="f-cancelar">Cancelar</button><button type="submit" class="btn btn-primary" id="f-guardar">Guardar reservación</button></div>
+      </form>
+    </dialog>
+
+    <!-- Pedido de la reservación -->
+    <dialog class="dlg-res" id="dlg-pedido" aria-labelledby="pd-titulo">
+      <button type="button" class="cerrar-x" id="pd-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="form-res">
+        <h2 id="pd-titulo">Pedido de la reservación</h2>
+        <input type="search" id="pd-buscar" class="buscador" placeholder="Buscar producto" aria-label="Buscar producto" autocomplete="off">
+        <div id="pd-lista" class="pd-lista"></div>
+        <p class="pd-total" id="pd-total"></p>
+        <div class="acciones-res"><button type="button" class="btn" id="pd-quitar">Quitar pedido</button><button type="button" class="btn btn-primary" id="pd-listo">Listo</button></div>
+      </div>
+    </dialog>
+
+    <!-- Anticipo -->
+    <dialog class="dlg-res dlg-chico" id="dlg-anticipo" aria-labelledby="a-titulo">
+      <button type="button" class="cerrar-x" id="a-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <form id="form-anticipo" class="form-res" novalidate>
+        <h2 id="a-titulo">Anticipo</h2>
+        <p class="ayuda-res" id="a-ayuda"></p>
+        <div class="campo"><label for="a_monto">Valor del anticipo</label><input id="a_monto" name="monto" type="number" min="1000" step="100" inputmode="numeric" required placeholder="$"></div>
+        <div class="campo"><span class="etiqueta-campo" id="a-metodo-etq">¿Cómo pagó?</span><div class="chips-res" id="a-metodos" role="radiogroup" aria-labelledby="a-metodo-etq"></div></div>
+        <div class="campo" id="a-campo-ref"><label for="a_ref">Número de transacción</label><input id="a_ref" name="ref" type="text" maxlength="60" placeholder="Referencia o nombre del comprobante"></div>
+        <p class="f-error" id="a-error" role="alert"></p>
+        <div class="acciones-res"><button type="button" class="btn" id="a-cancelar">Cancelar</button><button type="submit" class="btn btn-primary">Registrar anticipo</button></div>
+      </form>
+    </dialog>
+
+    <!-- Cancelar -->
+    <dialog class="dlg-res dlg-chico" id="dlg-cancelar" aria-labelledby="c-titulo">
+      <button type="button" class="cerrar-x" id="c-cerrar" aria-label="Cerrar" title="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <form id="form-cancelar" class="form-res" novalidate>
+        <h2 id="c-titulo">Cancelar reservación</h2>
+        <p class="ayuda-res" id="c-ayuda"></p>
+        <div class="campo"><label for="c_motivo">Motivo</label><input id="c_motivo" name="motivo" type="text" maxlength="120" placeholder="El cliente avisó, no contesta…"></div>
+        <div class="campo" id="c-campo-ant" hidden><span class="etiqueta-campo" id="c-ant-etq">Anticipo recibido</span>
+          <div class="chips-res" id="c-ant" role="radiogroup" aria-labelledby="c-ant-etq">
+            <button type="button" class="chip-res" role="radio" data-ant="Devuelto" aria-pressed="true">Devolverlo al cliente</button>
+            <button type="button" class="chip-res" role="radio" data-ant="Retenido" aria-pressed="false">Retenerlo (cancelación tardía)</button>
+          </div>
+        </div>
+        <div class="acciones-res"><button type="button" class="btn" id="c-no">Volver</button><button type="submit" class="btn btn-primary">Cancelar reservación</button></div>
+      </form>
+    </dialog>
+  </main>
+</div>
+<script src="js/datos.js?v=1792164060"></script>
+<script src="js/main.js?v=1792164060"></script>
+<script src="js/reservas.js?v=1792168414"></script>
+</body>
+</html>

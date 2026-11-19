@@ -1,0 +1,445 @@
+{
+ "mesas": [
+  {
+   "n": 1,
+   "capacidad": 4,
+   "ubicacion": "Salón",
+   "estado": "Ocupada"
+  },
+  {
+   "n": 2,
+   "capacidad": 4,
+   "ubicacion": "Salón",
+   "estado": "Disponible"
+  },
+  {
+   "n": 3,
+   "capacidad": 6,
+   "ubicacion": "Tarima",
+   "estado": "Disponible"
+  },
+  {
+   "n": 4,
+   "capacidad": 8,
+   "ubicacion": "Tarima",
+   "estado": "Reservada"
+  },
+  {
+   "n": 5,
+   "capacidad": 2,
+   "ubicacion": "Barra",
+   "estado": "Disponible"
+  }
+ ],
+ "movimientos": [
+  {
+   "fecha": "2026-10-13 20:10",
+   "insumo": "Aguardiente Nariño 750 ml",
+   "quien": "Paola Rosero",
+   "linea": "Línea 1",
+   "tipo": "Salida",
+   "cant": 1,
+   "obs": "Despacho pedido 1"
+  },
+  {
+   "fecha": "2026-10-12 16:00",
+   "insumo": "Cerveza Club Colombia",
+   "quien": "Laura Martínez",
+   "linea": "—",
+   "tipo": "Entrada",
+   "cant": 48,
+   "obs": "Compra a distribuidor"
+  },
+  {
+   "fecha": "2026-10-13 17:30",
+   "insumo": "Limón",
+   "quien": "Laura Martínez",
+   "linea": "—",
+   "tipo": "Merma",
+   "cant": 3,
+   "obs": "Limones en mal estado"
+  }
+ ],
+ "alertas": [
+  {
+   "insumo": "Limón",
+   "existencia": 18,
+   "fecha": "2026-10-13 17:30",
+   "estado": "Activa",
+   "quien": "—",
+   "atencion": "—"
+  }
+ ],
+ "pedidos": [
+  {
+   "n": 1,
+   "mesa": 3,
+   "mesero": "Paola Rosero",
+   "cliente": "María Benavides",
+   "canal": "Mesero",
+   "fecha": "2026-10-13 20:05",
+   "estado": "Facturado",
+   "venta": 1,
+   "lineas": [
+    {
+     "producto": "Aguardiente Nariño botella 750 ml",
+     "cant": 1,
+     "precio": 85000,
+     "iva": 8,
+     "esp": "",
+     "despacho": "Despachado"
+    },
+    {
+     "producto": "Michelada Club Colombia",
+     "cant": 2,
+     "precio": 9000,
+     "iva": 8,
+     "esp": "Con sal y limón extra",
+     "despacho": "Despachado"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "mesa": 1,
+   "mesero": "—",
+   "cliente": "Jorge Pantoja",
+   "canal": "App",
+   "fecha": "2026-10-13 20:20",
+   "estado": "Abierto",
+   "venta": 0,
+   "lineas": [
+    {
+     "producto": "Cerveza Club Colombia",
+     "cant": 3,
+     "precio": 6000,
+     "iva": 8,
+     "esp": "",
+     "despacho": "Pendiente"
+    }
+   ]
+  }
+ ],
+ "promociones": [
+  {
+   "nombre": "10% en botellas Noche Ranchera",
+   "tipo": "PORCENTAJE",
+   "pct": 10,
+   "aplicaA": "CATEGORIAS",
+   "categorias": [
+    "Aguardiente",
+    "Ron",
+    "Whisky",
+    "Tequila",
+    "Vodka",
+    "Brandy"
+   ],
+   "evento": "Noche Ranchera",
+   "soloEvento": false,
+   "desde": "2026-10-12",
+   "hasta": "2026-10-18",
+   "dias": [],
+   "horaDesde": "",
+   "horaHasta": "",
+   "segmento": "TODOS",
+   "minCompra": 0,
+   "tope": 0,
+   "condiciones": "",
+   "activa": true
+  },
+  {
+   "nombre": "2x1 en micheladas los jueves",
+   "tipo": "NXM",
+   "lleva": 2,
+   "paga": 1,
+   "aplicaA": "CATEGORIAS",
+   "categorias": [
+    "Micheladas"
+   ],
+   "evento": "",
+   "soloEvento": false,
+   "desde": "2026-10-01",
+   "hasta": "2026-12-31",
+   "dias": [
+    4
+   ],
+   "horaDesde": "17:00",
+   "horaHasta": "22:00",
+   "segmento": "TODOS",
+   "minCompra": 0,
+   "tope": 0,
+   "condiciones": "Jueves de 5 a 10 de la noche",
+   "activa": true
+  }
+ ],
+ "eventos": [
+  {
+   "nombre": "Noche Ranchera",
+   "artista": "Mariachi Sol de Pasto",
+   "inicio": "2026-10-16 21:00",
+   "fin": "2026-10-17 01:00",
+   "descripcion": "Serenata en vivo"
+  },
+  {
+   "nombre": "Viernes Vallenato",
+   "artista": "Los del Galeras",
+   "inicio": "2026-10-22 21:00",
+   "fin": "2026-10-23 02:00",
+   "descripcion": "Conjunto vallenato en vivo"
+  }
+ ],
+ "envios": [
+  {
+   "cliente": "María Benavides",
+   "tipo": "Promoción",
+   "promocion": "10% en botellas",
+   "evento": "Noche Ranchera",
+   "reserva": "",
+   "canal": "WhatsApp",
+   "fecha": "2026-10-12 12:00",
+   "estado": "Enviado"
+  },
+  {
+   "cliente": "María Benavides",
+   "tipo": "Recordatorio",
+   "promocion": "",
+   "evento": "Noche Ranchera",
+   "reserva": "Reserva 1",
+   "canal": "Correo",
+   "fecha": "2026-10-15 09:00",
+   "estado": "Pendiente"
+  }
+ ],
+ "empleados": [
+  {
+   "nombre": "Carlos",
+   "apellidos": "Ranchenatos",
+   "usuario": "admin",
+   "rol": "Administrador",
+   "tipoDoc": "CC",
+   "numDoc": "1085000001",
+   "telefono": "3001112233",
+   "correo": "dueno@ranchenatos.co",
+   "ingreso": "2020-01-10",
+   "activo": true,
+   "notas": ""
+  },
+  {
+   "nombre": "Laura",
+   "apellidos": "Martínez",
+   "usuario": "lmartinez",
+   "rol": "Cajero",
+   "tipoDoc": "CC",
+   "numDoc": "1085000002",
+   "telefono": "3002223344",
+   "correo": "admin@ranchenatos.co",
+   "ingreso": "2022-03-01",
+   "activo": true,
+   "notas": ""
+  },
+  {
+   "nombre": "Paola",
+   "apellidos": "Rosero",
+   "usuario": "prosero",
+   "rol": "Mesero",
+   "tipoDoc": "CC",
+   "numDoc": "1085000003",
+   "telefono": "3003334455",
+   "correo": "",
+   "ingreso": "2024-06-15",
+   "activo": true,
+   "notas": ""
+  },
+  {
+   "nombre": "Diana",
+   "apellidos": "Guerrero",
+   "usuario": "dguerrero",
+   "rol": "Mesero",
+   "tipoDoc": "CC",
+   "numDoc": "1085000004",
+   "telefono": "3004445566",
+   "correo": "",
+   "ingreso": "2025-02-01",
+   "activo": true,
+   "notas": ""
+  },
+  {
+   "nombre": "Juan",
+   "apellidos": "Díaz",
+   "usuario": "jdiaz",
+   "rol": "Mesero",
+   "tipoDoc": "CC",
+   "numDoc": "1085000005",
+   "telefono": "3005556677",
+   "correo": "",
+   "ingreso": "2025-05-10",
+   "activo": true,
+   "notas": ""
+  },
+  {
+   "nombre": "Carlos",
+   "apellidos": "Aguirre",
+   "usuario": "caguirre",
+   "rol": "Cocinero",
+   "tipoDoc": "CC",
+   "numDoc": "1085000006",
+   "telefono": "3006667788",
+   "correo": "",
+   "ingreso": "2025-06-20",
+   "activo": true,
+   "notas": ""
+  }
+ ],
+ "clientes": [
+  {
+   "nombre": "María",
+   "apellidos": "Benavides",
+   "tipoDoc": "CC",
+   "numDoc": "27000111",
+   "telefono": "3105556677",
+   "correo": "maria.b@correo.com",
+   "nacimiento": "1990-05-12",
+   "registro": "2026-09-01 20:10",
+   "autoriza": true
+  },
+  {
+   "nombre": "Jorge",
+   "apellidos": "Pantoja",
+   "tipoDoc": "",
+   "numDoc": "",
+   "telefono": "3116667788",
+   "correo": "",
+   "nacimiento": "",
+   "registro": "2026-09-20 18:00",
+   "autoriza": false
+  },
+  {
+   "nombre": "Eventos Nariño S.A.S.",
+   "apellidos": "",
+   "tipoDoc": "NIT",
+   "numDoc": "900123456",
+   "telefono": "3127778899",
+   "correo": "eventos@narino.co",
+   "nacimiento": "",
+   "registro": "2026-09-10 10:00",
+   "autoriza": true
+  }
+ ],
+ "ventas": [
+  {
+   "n": 1,
+   "turno": 2,
+   "pedido": 1,
+   "mesa": 3,
+   "cliente": "María Benavides",
+   "metodo": "Transferencia PSE",
+   "efectivo": false,
+   "ref": "PSE-000981",
+   "promo": "10% en botellas Noche Ranchera",
+   "subtotal": 103000,
+   "descuento": 10300,
+   "impuesto": 7416,
+   "propina": 0,
+   "total": 100116,
+   "fecha": "2026-10-13 19:40",
+   "cajero": "Laura Martínez",
+   "factura": "Aceptada",
+   "comprobante": "FACTURA",
+   "documento": "RAN1"
+  }
+ ],
+ "documentos": [
+  {
+   "id": "RAN1",
+   "tipo": "FACTURA",
+   "prefijo": "RAN",
+   "consecutivo": 1,
+   "venta": 1,
+   "ref": "",
+   "fecha": "2026-10-13 19:40",
+   "estado": "Aceptado",
+   "cufe": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6",
+   "ambiente": "2",
+   "adquirente": {
+    "tipoDoc": "13",
+    "numero": "27000111",
+    "nombre": "María Benavides",
+    "correo": "maria.b@correo.com"
+   },
+   "total": 100116,
+   "motivo": "",
+   "intentos": [
+    {
+     "n": 1,
+     "fecha": "2026-10-13 19:41",
+     "estado": "Error",
+     "detalle": "Tiempo de espera agotado"
+    },
+    {
+     "n": 2,
+     "fecha": "2026-10-13 19:43",
+     "estado": "Aceptado",
+     "detalle": "Documento validado por la DIAN"
+    }
+   ]
+  }
+ ],
+ "reservas": [
+  {
+   "n": 1,
+   "fecha": "2026-10-13",
+   "hora": "20:00",
+   "mesa": 1,
+   "personas": 3,
+   "cliente": "Jorge Pantoja",
+   "tipo": "MESA",
+   "evento": "",
+   "empleado": "",
+   "comprobante": "",
+   "obs": "",
+   "estado": "PENDIENTE"
+  },
+  {
+   "n": 2,
+   "fecha": "2026-10-16",
+   "hora": "21:00",
+   "mesa": 4,
+   "personas": 5,
+   "cliente": "María Benavides",
+   "tipo": "EVENTO",
+   "evento": "Noche Ranchera",
+   "empleado": "Paola Rosero",
+   "comprobante": "",
+   "obs": "Cumpleaños",
+   "estado": "CONFIRMADA"
+  }
+ ],
+ "turnos": [
+  {
+   "id": 1,
+   "cajero": "Laura Martínez",
+   "abre": "2026-10-12 18:00",
+   "cierra": "2026-10-13 00:05",
+   "base": 200000,
+   "sistema": 412300,
+   "contado": 412300,
+   "obs": "Sin novedades"
+  },
+  {
+   "id": 2,
+   "cajero": "Laura Martínez",
+   "abre": "2026-10-13 18:00",
+   "cierra": "",
+   "base": 200000,
+   "sistema": 0,
+   "contado": 0,
+   "obs": ""
+  }
+ ],
+ "insumosAjustes": [
+  {
+   "nombre": "Limón",
+   "existencia": 18
+  }
+ ]
+}

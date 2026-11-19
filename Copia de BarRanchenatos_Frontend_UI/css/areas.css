@@ -1,0 +1,89 @@
+/* Menú inicial de áreas, despacho (bar y cocina) y vista del cliente: mismo estilo de Mesas, Reservaciones y Caja. */
+
+/* ---------- Menú inicial ---------- */
+body.selector { min-height: 100vh; min-height: 100dvh; }
+.entrada { position: relative; z-index: 1; display: grid; justify-items: center; align-content: center; gap: .9rem; min-height: 100vh; min-height: 100dvh; padding: 2rem 1.2rem; box-sizing: border-box; text-align: center; }
+.entrada-marca { display: grid; justify-items: center; gap: .5rem; }
+.entrada-marca img { width: 4.2rem; height: 4.2rem; }
+.entrada-marca p { margin: 0; font-family: Poppins, Inter, sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: .14em; }
+.entrada h1 { margin: .6rem 0 0; font-size: 1.9rem; line-height: 1.2; }
+.entrada-ayuda { margin: 0 0 .8rem; color: var(--muted); }
+.areas { display: grid; grid-template-columns: repeat(3, minmax(0, 15rem)); gap: 1rem; width: 100%; justify-content: center; }
+.area-card { display: grid; justify-items: center; align-content: start; gap: .5rem; min-height: 11rem; padding: 1.3rem 1rem 1.1rem; font: inherit; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 18px; cursor: pointer; transition: box-shadow .15s, background .15s; }
+.area-card:hover, .area-card:focus-visible { background: var(--primary); color: var(--primary-ink); box-shadow: 0 0 0 3px var(--primary-soft), 0 0 0 5px var(--marco); }
+.area-card:hover img, .area-card:focus-visible img { filter: brightness(0) invert(1); }
+:root[data-theme="oscuro"] .area-card:hover img, :root[data-theme="oscuro"] .area-card:focus-visible img { filter: none; }
+.area-card img { width: 2.6rem; height: 2.6rem; }
+.area-card b { font-size: 1.15rem; }
+.area-card span { font-size: .84rem; line-height: 1.35; opacity: .75; }
+.area-cliente { border-style: dashed; }
+@media (max-width: 760px) { .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; } .area-card { min-height: 9.5rem; padding: 1rem .7rem .9rem; } .entrada h1 { font-size: 1.5rem; } .area-card span { font-size: .78rem; } }
+@media (max-height: 640px) { .entrada { align-content: start; } }
+
+/* ---------- Despacho ---------- */
+body.despacho-pag { --sel: #7FC4CE; }
+:root[data-theme="oscuro"] body.despacho-pag { --sel: #9DB5F0; }
+body.despacho-pag .main { display: grid; gap: 1.1rem; align-content: start; grid-template-columns: minmax(0, 1fr); }
+#d-aviso:empty { display: none; }
+#d-aviso { margin: 0; padding: .65rem .9rem; background: var(--bloque); border-radius: 12px; font-size: .9rem; }
+.widgets:has(.w-pedido) { grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.w-pedido { cursor: default; }
+.dp-lineas { list-style: none; margin: .2rem 0 0; padding: 0; display: grid; gap: .5rem; width: 100%; text-align: left; }
+.dp-lineas li { padding: .6rem .7rem; background: var(--bloque); border-radius: 12px; }
+.dp-fila { display: flex; justify-content: space-between; align-items: center; gap: .6rem; }
+.dp-nombre { min-width: 0; font-size: .95rem; overflow-wrap: anywhere; }
+.dp-nombre small { display: block; color: var(--muted); font-size: .78rem; }
+.dp-fila .btn-fila { flex: none; min-height: 2.4rem; }
+.dp-prep { margin-top: .5rem; font-size: .85rem; }
+.dp-prep summary { cursor: pointer; font-weight: 600; }
+.dp-prep ol { margin: .4rem 0 0; padding-left: 1.3rem; display: grid; gap: .25rem; }
+.vacio-c { display: grid; justify-items: center; padding: 2.5rem 0; text-align: center; color: var(--muted); }
+
+/* ---------- Vista del cliente ---------- */
+body.cliente-pag { --sel: #7FC4CE; }
+.cl-cab { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1.2rem; background: var(--bg); border-bottom: 1px solid var(--line); }
+.cl-marca { display: flex; align-items: center; gap: .6rem; font-family: Poppins, Inter, sans-serif; font-weight: 600; letter-spacing: .12em; }
+.cl-marca img { width: 2.4rem; height: 2.4rem; }
+.cl-main { position: relative; z-index: 1; display: grid; gap: 1rem; align-content: start; grid-template-columns: minmax(0, 1fr); max-width: 64rem; margin: 0 auto; padding: 1.2rem 1.2rem 3rem; }
+.cl-barra { margin-bottom: .6rem; }
+.buscador { width: 100%; max-width: 24rem; box-sizing: border-box; min-height: 42px; padding: 0 1.1rem; font: inherit; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 999px; }
+.cl-precio { font-weight: 700; font-size: 1rem; opacity: 1; }
+.w-carta { cursor: default; }
+.cl-nota { margin: 1rem 0 0; font-size: .82rem; color: var(--muted); }
+.cl-vacio { padding: 2rem 0; text-align: center; color: var(--muted); }
+.cl-form, .cl-listo { display: grid; gap: 1rem; max-width: 36rem; padding: 1.4rem; background: var(--cristal); border: 1px solid var(--marco); border-radius: 18px; }
+.cl-form h2, .cl-listo h2 { margin: 0; font-size: 1.4rem; }
+.cl-ayuda { margin: 0; color: var(--muted); }
+.cl-listo p { margin: 0; }
+.cl-enviar { min-height: 3rem; border-radius: 10px; font-size: 1rem; }
+.cl-listo .btn { justify-self: start; border-color: var(--marco); border-radius: 10px; }
+@media (max-width: 560px) { .cl-cab { padding: .6rem .9rem; } .cl-main { padding: .9rem .9rem 2.5rem; } .cl-form, .cl-listo { padding: 1.1rem; } }
+.cl-form .btn-primary, .cl-cab .btn { border-color: var(--marco); }
+.cl-form .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+.cl-cab .btn { background: var(--cristal); color: var(--text); border-radius: 10px; }
+
+/* Cliente: pedido anticipado, abono y penalización */
+.cl-cant { display: inline-flex; align-items: center; gap: .5rem; justify-content: center; }
+.cl-cant button { width: 2.2rem; height: 2.2rem; padding: 0; font: inherit; font-size: 1.2rem; line-height: 1; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 50%; cursor: pointer; }
+.cl-cant button:disabled { opacity: .35; cursor: default; }
+.cl-cant b { min-width: 1.4rem; text-align: center; font-variant-numeric: tabular-nums; }
+.w-carta .cl-cant { margin-top: auto; }
+.cl-barra-pedido { position: fixed; z-index: 30; left: 50%; bottom: 1rem; transform: translateX(-50%); display: flex; align-items: center; gap: 1rem; width: max-content; max-width: calc(100% - 1.5rem); padding: .6rem .7rem .6rem 1.2rem; color: var(--primary-ink); background: var(--primary); border-radius: 999px; box-shadow: 0 6px 18px rgba(18, 30, 66, .35); }
+.cl-barra-pedido[hidden] { display: none; }
+.cl-barra-pedido .btn { min-height: 2.4rem; background: var(--primary-ink); color: var(--primary); border-color: var(--primary-ink); border-radius: 999px; white-space: nowrap; }
+.cl-sub { margin: 0; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.cl-lineas { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.cl-lineas li { display: grid; grid-template-columns: minmax(0, 1fr) auto 5.5rem; gap: .6rem; align-items: center; padding-bottom: .5rem; border-bottom: 1px dashed var(--marco); font-size: .92rem; }
+.cl-v { text-align: right; font-variant-numeric: tabular-nums; }
+.cl-totales { display: grid; gap: .3rem; margin: 0; }
+.cl-totales div { display: flex; justify-content: space-between; gap: 1rem; font-size: .92rem; }
+.cl-totales .cl-gran { padding-top: .4rem; border-top: 1px solid var(--marco); font-size: 1.2rem; font-weight: 700; }
+.cl-abono { display: grid; gap: .8rem; margin: 0; padding: 1rem; border: 1px solid var(--marco); border-radius: 14px; min-width: 0; }
+.cl-abono legend { padding: 0 .4rem; font-weight: 700; }
+.cl-politica { margin: 0; padding: .7rem .8rem; font-size: .88rem; background: var(--bloque); border-radius: 10px; }
+.cl-abono[hidden], #cl-abono-otro[hidden] { display: none; }
+@media (max-width: 560px) { .cl-lineas li { grid-template-columns: minmax(0, 1fr) auto; } .cl-lineas .cl-v { grid-column: 1 / -1; text-align: left; } .cl-barra-pedido { width: calc(100% - 1.5rem); justify-content: space-between; } }
+.entrada-pie { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: .6rem; }
+.entrada-pie .btn { border-color: var(--marco); border-radius: 10px; min-height: 2.6rem; background: var(--cristal); color: var(--text); }
+.cl-llamadas { display: flex; flex-wrap: wrap; gap: .6rem; }
+.cl-llamadas .btn { flex: 1 1 10rem; min-height: 2.6rem; border-color: var(--marco); border-radius: 10px; background: var(--cristal); color: var(--text); }

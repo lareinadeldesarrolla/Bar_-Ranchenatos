@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/area.js"></script>
+  <title>Reportes · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=1792164060">
+  <link rel="stylesheet" href="css/cobro.css">
+  <link rel="stylesheet" href="css/ticket.css">
+  <link rel="stylesheet" href="css/inicio.css?v=1792164060">
+  <link rel="stylesheet" href="css/widgets.css?v=1792166957">
+  <link rel="stylesheet" href="css/reportes.css">
+</head>
+<body class="inicio">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="shell">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <img src="assets/ranchenatos_isotipo.svg" alt="">
+    <strong>Ranchenatos</strong>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+    <nav aria-label="Principal">
+      <div class="nav-label">Operación</div>
+      <ul class="nav">
+        <li><a href="inicio.html"><img class="ico" src="icons/inicio.svg" alt="">Inicio</a></li>
+        <li><a href="pedidos.html"><img class="ico" src="icons/pedidos.svg" alt="">Pedidos</a></li>
+        <li><a href="mesas.html"><img class="ico" src="icons/mesas.svg" alt="">Mesas</a></li>
+        <li><a href="reservas.html"><img class="ico" src="icons/reserva.svg" alt="">Reservaciones</a></li>
+        <li><a href="despacho.html"><img class="ico" src="icons/inicio/en_preparacion.svg" alt="">Despacho</a></li>
+        <li><a href="caja.html"><img class="ico" src="icons/efectivo.svg" alt="">Caja</a></li>
+      </ul>
+      <div class="nav-label">Catálogo</div>
+      <ul class="nav">
+        <li><a href="productos.html"><img class="ico" src="icons/productos.svg" alt="">Productos y recetas</a></li>
+        <li><a href="inventario.html"><img class="ico" src="icons/inventario.svg" alt="">Inventario<span class="count" aria-label="1 alerta">1</span></a></li>
+        <li><a href="eventos.html"><img class="ico" src="icons/calendario.svg" alt="">Eventos y promociones</a></li>
+      </ul>
+      <div class="nav-label">Gestión</div>
+      <ul class="nav">
+        <li><a href="clientes.html"><img class="ico" src="icons/clientes.svg" alt="">Clientes</a></li>
+        <li><a href="reportes.html" aria-current="page"><img class="ico" src="icons/reportes.svg" alt="">Reportes</a></li>
+        <li><a href="usuarios.html"><img class="ico" src="icons/usuarios.svg" alt="">Usuarios y roles</a></li>
+      </ul>
+    </nav>
+    <div class="userbox">
+      <strong>Carlos Ranchenatos</strong>Administrador
+      <button class="btn btn-sm" id="btn-tema" type="button">Modo claro u oscuro</button>
+      <button class="enlace" id="btn-reiniciar" type="button">Restablecer datos de ejemplo</button>
+    </div>
+  </aside>
+
+  <main class="main" id="contenido">
+    <header class="encabezado">
+      <h1 class="sr-only">Reportes</h1>
+      <h2 class="sr-only">Cuadro de mando integral, ventas, estados de cuenta, inventario y clientes</h2>
+      <p class="intro">Reportes</p>
+      <div class="actions"><button type="button" class="btn" id="btn-personalizar">Personalizar</button><button type="button" class="btn" id="btn-imprimir">Imprimir</button></div>
+    </header>
+    <div class="r-barra"><div class="res-filtros" id="r-vistas" role="group" aria-label="Reporte"></div><div class="segmento" id="r-como" role="group" aria-label="Ver todo como"><button type="button" class="seg" data-como="grafico">Todo en gráficos</button><button type="button" class="seg" data-como="tabla">Todo en tablas</button></div></div>
+    <div class="tablero fluido" id="tablero" aria-live="polite"></div>
+    <section class="estado-cuenta" id="estado-cuenta" hidden></section>
+
+    <dialog class="hoja-ind" id="dlg-personalizar" aria-labelledby="p-titulo">
+      <header class="p-cab"><h2 id="p-titulo">Personalizar este reporte</h2><button type="button" class="btn btn-sm" id="p-cerrar">Cerrar</button></header>
+      <div class="p-cols">
+        <section aria-labelledby="p-h1"><h3 id="p-h1">En pantalla <small>(Se muestran en este orden)</small></h3><ol id="p-visibles"></ol></section>
+        <section aria-labelledby="p-h2"><h3 id="p-h2">Disponibles</h3>
+          <div class="p-filtros" id="p-filtros"><label class="sr-only" for="p-grupo">Grupo</label><select id="p-grupo"></select><label class="sr-only" for="p-buscar">Buscar indicador</label><input id="p-buscar" type="search" placeholder="Buscar indicador"></div>
+          <div id="p-disponibles"></div>
+        </section>
+      </div>
+      <details class="p-params">
+        <summary>Datos económicos <small>(para el punto de equilibrio y la rentabilidad)</small></summary>
+        <div class="p-params-grid" id="p-params">
+          <label>Costos fijos del mes ($)<input id="par-costosFijos" type="number" min="0" step="1000" inputmode="numeric"><small>Arriendo, nómina, servicios, etc.</small></label>
+          <label>Turnos al mes<input id="par-turnosMes" type="number" min="1" max="31" inputmode="numeric" placeholder="26"><small>Noches que abre el bar</small></label>
+          <label>Horas por turno<input id="par-horasTurno" type="number" min="1" max="24" inputmode="numeric" placeholder="6"><small>Horas de atención</small></label>
+          <label>Meta de ventas por turno ($)<input id="par-metaTurno" type="number" min="0" step="1000" inputmode="numeric"><small>Para medir el cumplimiento</small></label>
+          <label>Inversión inicial ($)<input id="par-inversion" type="number" min="0" step="1000" inputmode="numeric"><small>Para calcular en cuánto se recupera</small></label>
+        </div>
+      </details>
+      <footer class="p-pie">
+        <span class="p-ejemplo"><button type="button" class="enlace" id="p-ejemplo">Cargar datos de ejemplo</button><button type="button" class="enlace" id="p-sin-ejemplo">Quitar datos de ejemplo</button></span>
+        <button type="button" class="btn" id="p-restablecer">Restablecer selección</button>
+      </footer>
+    </dialog>
+
+  </main>
+</div>
+<script src="js/datos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/indicadores.js"></script>
+<script>
+  window.PAGINA_TABLERO = { clave: 'rn_reportes_v2', soloIndicadores: true, barraRapida: true, vistas: [
+    { clave: 'mando', titulo: 'Cuadro de mando integral', orden: [
+      '#Financiera|Objetivo: vender más y quedarse con más de cada peso',
+      'ventas_turno', 'utilidad_total', 'margen_operativo', 'cumplimiento_meta', 'eq_avance', 'utilidad_turno', 'ventas_historial', 'utilidad_historial', 'estructura_costos',
+      '#Clientes|Objetivo: más clientes que vuelvan y gasten más',
+      'clientes_total', 'clientes_frecuentes', 'ticket', 'num_ventas', 'clientes_nivel', 'clientes_top', 'reservas_total', 'reservas_cancel', 'promos_uso', 'con_promo',
+      '#Procesos internos|Objetivo: servir rápido y sin desperdicio',
+      'pedidos_curso', 'ocupacion', 'tiempo_mesa', 'facturas_ok', 'hora_pico', 'ventas_hora', 'pedidos_estado', 'facturas_pend',
+      '#Aprendizaje y crecimiento|Objetivo: un equipo y un inventario que sostengan el crecimiento',
+      'empleado_top', 'valor_inventario', 'insumos_bajo_n', 'agotados', 'ventas_atendio', 'cobros_cajero', 'inv_categoria' ] },
+    { clave: 'ventas', titulo: 'Ventas', orden: [
+      '#Resumen|Lo vendido, el ticket, los descuentos y los impuestos',
+      'ventas_turno', 'ventas_acum', 'num_ventas', 'ticket', 'variacion', 'cuenta_alta', 'descuentos', 'impuestos',
+      '#Cuándo se vende|Por hora, por turno y por día de la semana',
+      'ventas_hora', 'acumulado_hora', 'ventas_historial', 'dia_semana',
+      '#Dónde y quién vende|Por mesa, por canal y por empleado',
+      'ventas_mesa', 'ventas_canal', 'ventas_atendio',
+      '#Qué se vende|Productos y categorías',
+      'categoria', 'top_unidades', 'ingresos_producto',
+      '#Cómo pagan|Métodos de pago, rangos de cuenta e impuestos',
+      'cobros_metodo', 'rango_ticket', 'impuestos_tarifa',
+      '#Detalle|Cada venta con su subtotal, descuento, impuesto, propina y total',
+      'ventas_detalle' ] },
+    { clave: 'cuentas', titulo: 'Estados de cuenta', propia: true },
+    { clave: 'inventario', titulo: 'Inventario', orden: [
+      '#Resumen|Cuánto vale lo que hay y cuánto cuesta lo vendido',
+      'valor_inventario', 'insumos_bajo_n', 'costo_vendido', 'margen_total',
+      '#Dónde está el dinero|Por categoría y por insumo',
+      'inv_categoria', 'inv_valor_top',
+      '#Kardex y expiraciones|Movimientos registrados y lo que se vence',
+      'inv_movimientos', 'inv_vencimientos',
+      '#Alertas de stock|Lo que falta, lo que se agota y lo que se gasta',
+      'insumos_bajo', 'agotados', 'por_agotarse', 'costo_insumos' ] },
+    { clave: 'clientes', titulo: 'Clientes', orden: [
+      '#Base de clientes|Cuántos son, cuántos vuelven y cuántos autorizaron sus datos',
+      'clientes_total', 'clientes_frecuentes', 'clientes_autorizados', 'ticket',
+      '#Quiénes son|Nivel, tipo y altas por mes',
+      'clientes_nivel', 'clientes_tipo', 'clientes_registro',
+      '#Quiénes más consumen|Ranking y detalle de cada cliente',
+      'clientes_top', 'clientes_tabla',
+      '#Para vender más|Cumpleaños de los próximos treinta días',
+      'clientes_cumple' ] },
+    { clave: 'indicadores', titulo: 'Todos los indicadores', orden: [
+      '#Ventas', 'ventas_turno', 'ticket', 'ventas_hora', '#Productos', 'utilidad_total', 'top_unidades', 'baja_venta', 'candidatos', '#Servicio', 'pedidos_curso' ] }
+  ] };
+</script>
+<script src="js/tablero.js"></script>
+<script src="js/reportes.js"></script>
+</body>
+</html>

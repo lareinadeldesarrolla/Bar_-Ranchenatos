@@ -1,0 +1,73 @@
+/* Inventario como kardex: mismo estilo de Productos y Caja (widgets, filtros en chips, ventanas con la X por fuera). */
+body.inventario-pag { --sel: #7FC4CE; }
+:root[data-theme="oscuro"] body.inventario-pag { --sel: #9DB5F0; }
+body.inventario-pag .main { display: grid; gap: 1.1rem; align-content: start; grid-template-columns: minmax(0, 1fr); }
+body.inventario-pag .encabezado .actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+body.inventario-pag .encabezado .btn { border-color: var(--marco); border-radius: 10px; min-height: 42px; background: var(--cristal); color: var(--text); }
+body.inventario-pag .encabezado .btn-primary { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+#i-aviso:empty { display: none; }
+#i-aviso { margin: 0; padding: .65rem .9rem; background: var(--bloque); border-radius: 12px; font-size: .9rem; }
+.campo[hidden] { display: none; }
+.prod-foto { height: 9rem; border-radius: 14px; overflow: hidden; background: var(--bloque); }
+.prod-foto img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.sin-pasos { margin: 0; text-align: left; font-size: .9rem; color: var(--muted); }
+
+/* Widget de insumo */
+.w-insumo .w-valor { font-size: 1rem; }
+.w-insumo .w-cab img { width: 1.2rem; height: 1.2rem; }
+.w-insumo .w-cab b { font-size: .72rem; }
+.w-existencia { margin: 0; line-height: 1; }
+.w-existencia b { font-size: 1.7rem; font-variant-numeric: tabular-nums; }
+.w-existencia small { font-size: .8rem; opacity: .75; }
+.nivel { width: 100%; height: 6px; overflow: hidden; background: var(--bloque); border-radius: 999px; }
+.nivel span { display: block; height: 100%; background: var(--sel); border-radius: 999px; }
+.w-activa .nivel { background: rgba(255, 255, 255, .22); }
+.w-activa .nivel span { background: var(--primary-ink); }
+
+/* Kardex: una fila por movimiento. En celular cada movimiento es una tarjeta con sus datos rotulados */
+.kdx { display: grid; text-align: left; border: 1px solid var(--line); border-radius: 12px; overflow: clip; }
+.kx-cab, .kx-fila { display: grid; grid-template-columns: 6.4rem minmax(0, 1.5fr) repeat(3, minmax(0, 1.1fr)); gap: .6rem; align-items: center; padding: .5rem .8rem; }
+.kx-cab { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--bloque); }
+.kx-fila { font-size: .9rem; border-top: 1px solid var(--line); }
+.kx-fila small { display: block; font-size: .72rem; color: var(--muted); overflow-wrap: anywhere; }
+.kx-fecha { font-variant-numeric: tabular-nums; font-size: .82rem; }
+.kx-det b { overflow-wrap: anywhere; }
+.kx-dato { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.kx-dato i { color: var(--muted); font-style: normal; }
+.kx-saldo { font-weight: 600; }
+.kx-dato small { display: block; }
+.kx-ini, .kx-tot { background: var(--bloque); }
+.kx-tot { font-weight: 600; }
+@media (max-width: 700px) {
+  .kx-cab { display: none; }
+  .kx-fecha { grid-column: 1 / -1; display: flex; gap: .5rem; align-items: baseline; }
+  .kx-fecha small { display: inline; }
+  .kx-det { grid-column: 1 / -1; }
+  .kx-dato::before { content: attr(data-t); display: block; font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .kx-tot .kx-fecha { display: none; }
+}
+
+.tk-datos.kx-datos { grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); }
+@media (max-width: 700px) {
+  .tk-datos.kx-datos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tk-datos.kx-datos div { display: grid; justify-items: center; text-align: center; }
+  .kx-ini .kx-fecha { display: none; }
+}
+.tk-datos.kx-datos dt, .tk-datos.kx-datos dd { text-align: center; }
+
+.kx-filtros { display: flex; flex-wrap: wrap; align-items: end; gap: .6rem 1rem; text-align: left; }
+.kx-filtros label { display: grid; gap: .2rem; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kx-filtros input { min-height: 38px; box-sizing: border-box; padding: 0 .6rem; font: inherit; font-size: .9rem; letter-spacing: 0; text-transform: none; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.kx-vacio { display: block; text-align: center; color: var(--muted); }
+@media (max-width: 560px) { .kx-filtros label { flex: 1 1 8rem; } .kx-filtros input { min-width: 0; width: 100%; } }
+@media print {
+  body.imprimiendo .shell { display: none; }
+  body.imprimiendo dialog { position: static; width: auto; max-width: none; max-height: none; margin: 0; border: 0; box-shadow: none; }
+  body.imprimiendo dialog .form-res { max-height: none; overflow: visible; }
+  body.imprimiendo .cerrar-x, body.imprimiendo .acciones-ventana, body.imprimiendo .kx-filtros { display: none; }
+}
+@media (max-width: 700px) {
+  #i-cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -.2rem; padding: .15rem .2rem; }
+  #i-cats::-webkit-scrollbar { display: none; }
+  #i-cats .chip-filtro { flex: none; }
+}

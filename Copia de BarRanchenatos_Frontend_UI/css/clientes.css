@@ -1,0 +1,7 @@
+/* Clientes: widgets con métricas y tabla ordenable (en celular, cada fila es una tarjeta). */
+.c-mini { display: flex; gap: .5rem; justify-content: center; width: 100%; }
+.c-mini span { display: grid; flex: 1 1 0; min-width: 0; padding: .35rem .3rem; font-size: .66rem; letter-spacing: .05em; text-transform: uppercase; background: var(--bloque); border-radius: 10px; }
+.c-mini b { font-size: .92rem; letter-spacing: 0; text-transform: none; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.w-activa .c-mini span { background: rgba(255, 255, 255, .16); }
+
+#c-lista { padding-bottom: 5rem; }

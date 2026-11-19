@@ -1,0 +1,172 @@
+SISTEMA DE GESTIÓN BAR RANCHENATOS
+Evidencia GA6-220501096-AA4-EV03: diseño frontend
+
+Cómo abrirlo
+Abre el archivo index.html con doble clic en cualquier navegador. No pide clave y no necesita instalación ni servidor.
+
+Páginas
+Hay una página HTML por cada parte de la base de datos bar_ranchenatos, con todos sus campos. index.html es el inicio. pedidos.html cubre pedido y detalle_pedido y el cobro con venta. mesas.html cubre mesa. reservas.html cubre reserva. eventos.html cubre evento, promocion y envio. productos.html cubre categoria, producto y receta. inventario.html cubre insumo, movimiento_inventario y alerta_inventario. clientes.html cubre cliente. caja.html cubre cierre_caja y metodo_pago. facturacion.html cubre venta y documento_electronico. reportes.html muestra indicadores. usuarios.html cubre empleado y rol.
+
+Archivos
+css/styles.css tiene los estilos con los colores y la tipografía del Manual de Marca de Software. js/main.js es el único JavaScript: abre el menú en celular, cambia entre modo claro y oscuro, valida los formularios, agrega filas a las tablas, filtra con el buscador y calcula el total del pedido y el cuadre de caja. La carpeta icons tiene los íconos del kit de marca y la carpeta assets el logo.
+
+Alcance
+Es solo frontend. Los datos de las tablas están escritos en el HTML como ejemplo y las filas que se agregan no se guardan al recargar la página. Las validaciones copian reglas de la base de datos: capacidad de la mesa, teléfono, documento, autorización de datos, referencia de pago y cuadre de caja.
+
+Usabilidad aplicada
+Menú igual en todas las páginas, formularios con etiqueta visible y el error junto al campo, estados con texto además de color, uso con teclado, enlace para saltar al contenido, diseño adaptable a celular y buen contraste.
+
+Diseño a prueba de errores (poka-yoke)
+Las páginas evitan el error antes de que ocurra, en lugar de avisarlo después de guardar. El botón de guardar se bloquea mientras falte algo y escribe a su lado qué falta. Las opciones que no sirven se deshabilitan antes de elegirlas: en Reservas, las mesas donde no caben las personas aparecen bloqueadas, no se puede elegir una fecha pasada ni una mesa ya reservada a esa hora, y el evento y el comprobante solo se habilitan si la reserva es de tipo evento. En Pedidos, la cantidad se cambia con los botones más y menos (mínimo 1), la referencia de pago solo se pide si el medio de pago la exige y no se puede cobrar un pedido vacío. En Caja, la diferencia se calcula mientras se escribe y, si el conteo no cuadra, el motivo pasa a ser obligatorio. En Clientes y Usuarios, el teléfono y los documentos solo aceptan números, el usuario se escribe siempre en minúscula, la contraseña muestra sus reglas mientras se escribe y no se guarda un cliente sin la autorización de datos. En Inventario, una salida o una merma no puede superar lo que hay. En Eventos y promociones, el fin no puede ser anterior al inicio. En Productos, el impuesto se elige de una lista (0, 5, 8 o 19 por ciento).
+Esto vive en js/main.js, en la sección 7. Las restricciones de la base de datos (CHECK, UNIQUE y llaves foráneas) siguen siendo la garantía final cuando se conecte el servidor.
+
+Flujo de un pedido
+Cada mesa tiene su propio pedido. Al tocar un producto en una mesa libre se abre un pedido nuevo y la mesa pasa a ocupada. Los productos nacen pendientes, se pueden cambiar de cantidad o quitar, y se marcan como despachados con el botón de la palomita. El pedido pasa solo de Abierto a En preparación y a Entregado según sus productos. Solo se puede cobrar cuando todos los productos están despachados. Al cobrar, el pedido queda Facturado, recibe el siguiente número de venta y la mesa vuelve a estar libre. Si se quitan todos los productos de un pedido, queda Anulado.
+
+FLUJO CONECTADO (nuevo)
+-----------------------
+Los datos de la operación se guardan en el navegador (localStorage), NO en una base de datos, y no se
+modificó ningún script SQL. Sirve para probar el recorrido completo sin servidor:
+
+  Pedidos -> despachar -> cobrar -> Caja -> Facturación -> Inventario -> Reportes
+
+  js/datos.js    datos de ejemplo (los de la base del proyecto) y reglas de cálculo
+  js/pedidos.js  mesas, carta con existencias, ticket y ventana de cobro
+  js/flujo.js    pinta Inicio, Mesas, Caja, Facturación y Reportes con esos datos
+  js/main.js     menú, tema, validaciones y poka-yoke comunes
+
+Reglas que el sistema impone: un producto sin existencias aparece agotado; no se cobra con productos
+pendientes de despachar ni con la caja cerrada; el efectivo recibido debe cubrir el total y se calcula
+el cambio; la caja no se cierra con pedidos abiertos; despachar descuenta el inventario según la receta
+y genera la alerta de stock mínimo.
+La factura electrónica se transmite en modo simulado (no hay conexión con la DIAN).
+El botón "Restablecer datos de ejemplo" del menú borra lo hecho y vuelve a los datos iniciales.
+
+INICIO: TABLERO DE INDICADORES
+------------------------------
+Inicio es un tablero para la gerencia. En "Personalizar" se elige qué indicadores se ven, en qué orden,
+si cada uno se ve como gráfico o como tabla, con qué estilo y de qué tamaño. Hay 113 indicadores en 9 grupos
+(Ventas, Cobro, Mesas, Reservas, Productos, Promociones, Operación, Economía e Inventario).
+  js/indicadores.js  cálculo de cada indicador
+  js/tablero.js      dibujo (9 estilos de gráfico, 8 de tabla, 3 de cifra), personalización y datos de ejemplo
+Los costos fijos, turnos al mes, horas por turno, meta e inversión se escriben en Personalizar > Datos económicos
+y alimentan el punto de equilibrio y la rentabilidad. Todo se guarda en el navegador, no en la base de datos.
+El botón "Cargar datos de ejemplo" crea ventas y reservas de muestra para ver los gráficos.
+
+INICIO: OPERACIÓN E INDICADORES EN UNA SOLA PANTALLA
+----------------------------------------------------
+Inicio es una sola pantalla. Las mesas, las reservas, las cuentas por cobrar, los accesos rápidos y los
+indicadores son bloques que se eligen, ordenan, redimensionan y cambian de estilo en "Personalizar",
+donde Operación e Indicadores aparecen en dos secciones separadas.
+  Operación: mesas (tarjetas, compactas, lista), reservas (con botones, solo agenda),
+             cuentas por cobrar (lista, tarjetas) y accesos rápidos (íconos, botones).
+Desde los bloques se puede confirmar, cancelar o marcar la llegada de una reserva, y despachar y cobrar la cuenta
+de una mesa sin salir de Inicio. El cobro sigue las reglas de Pedidos: hay que despachar lo pendiente, la caja debe
+estar abierta y el efectivo recibido debe cubrir el total. Al marcar "Llegó" se abre el pedido de esa mesa.
+  js/operacion.js
+
+Bloques de Operación (js/operacion.js): Mesas (tarjetas, compactas, lista), Mesas libres, Mesas ocupadas y Mesas reservadas
+(mesas dibujadas o solo la cifra), Plano del salón (cada mesa con sus sillas, según su estado), Reservas, Cuentas por cobrar
+y Accesos rápidos. Los íconos usados en Inicio están en icons/inicio (copias en azul marino de los íconos del kit).
+
+Mover los widgets: cada bloque de Inicio tiene un asa (tres puntos) arriba a la derecha. Se arrastra con el ratón o el dedo
+y se suelta donde se quiera; con el teclado, se enfoca el asa y se usan las flechas. El orden se guarda en el navegador.
+Las tablas se adaptan al ancho de su bloque: si no caben se compactan y, si aun así no caben, se apilan con la etiqueta de cada dato.
+
+
+MESAS (mesas.html)
+Usa el mismo tablero de Inicio, pero con widgets propios de las mesas y sin repetir los de Inicio (ocupación, mesas libres,
+cuentas abiertas, reservaciones): plano del salón con sillas, plano por recintos, mesas por área (tarjetas o fichas), detalle de la mesa en una ventana emergente al tocarla (X por fuera),
+y los indicadores de configuración (mesas, puestos, áreas, mesa más grande,
+puestos por área, mesas por tamaño). Administrar mesas (crear, editar, inactivar) es un botón del encabezado que abre su propia página (mesas-admin.html, js/mesas-admin.js) en la misma ventana. Los widgets se pueden arrastrar y se recuerdan en el navegador (rn_mesas_v1).
+Archivos: js/mesas-widgets.js, css/mesas.css. El motor (js/tablero.js) lee window.PAGINA_TABLERO para elegir su catálogo y su memoria.
+En la ventana de cada mesa con cuenta se puede Trasladar la cuenta a una mesa libre o Unir con otras mesas de la misma zona (dos o más, libres u ocupadas: quedan como una sola mesa con la suma de puestos y, si tienen cuentas, estas se juntan en una) y Separar para deshacerlo; las uniones se separan solas cuando empieza el siguiente turno (al abrir la caja). Las zonas se crean, renombran y eliminan desde la ventana de Nueva mesa o Editar mesa, en Administrar mesas y también se eliminan (una zona con mesas se elimina junto con ellas, pero no si alguna tiene cuenta abierta, reservación pendiente o está unida). Las mesas se pueden eliminar con las mismas condiciones.
+En el encabezado de Mesas hay filtros por estado (Ocupadas, Libres, Reservadas), por puestos y por zona; funcionan sobre el plano y las mesas por área. Mientras más mesas se ven, más pequeñas se dibujan.
+
+RESERVACIONES (reservas.html)
+Mismo estilo de Inicio, Pedidos y Mesas. Indicadores (hoy, por confirmar, anticipos recibidos y por cobrar), filtros por cuándo, estado y tipo,
+lista agrupada por día y ventanas emergentes (con la X por fuera) para ver el detalle, crear o editar, registrar el anticipo y cancelar.
+Reglas: la mesa debe tener puestos para las personas y no se reserva dos veces dentro de 2 horas; los eventos se confirman solo con anticipo;
+al cancelar con anticipo se elige devolverlo o retenerlo; "Llegó" abre el pedido de la mesa; cada cambio queda en el historial.
+Archivos: reservas.html, js/reservas.js, css/reservas.css. El anticipo pagado se transfiere al pedido al llegar el cliente y se descuenta del total al cobrar (simulación local).
+
+WIDGETS (css/widgets.css)
+Reservaciones y Administrar mesas muestran cada elemento como un widget igual al de la pantalla Mesas (icono, texto grande, estado abajo a la derecha). Azul marino = activa/confirmada, celeste = llegó, gris = reservada, borde punteado = pendiente, atenuada = cancelada o inactiva.
+
+CAJA Y FACTURACIÓN ELECTRÓNICA (caja.html)
+En esta copia, toda la sección de facturación es demostrativa: estados, códigos y XML no son fiscales, y no se transmite nada a la DIAN.
+Una sola pantalla con categorías: Por cobrar (primera), Tickets, Facturación, Caja menor, Turno, Métodos de pago y Datos de facturación. facturacion.html solo redirige.
+El comprobante sale solo: con la DIAN configurada y una empresa que cobra impoconsumo o IVA (sujeto de esos impuestos) cada venta lleva documento equivalente POS (consumidor final) o factura electrónica (se propone cuando el cliente es una empresa con NIT, y se llenan sus datos); si no cobra impuestos o aún no tiene la DIAN lista, entrega un comprobante de pago, que no es factura. No hay que elegir un modo: depende de los impuestos activos, el régimen y los datos de la DIAN (Caja, Datos de facturación). Se imprime el comprobante en todos los casos; también se puede generar el documento después, desde el ticket o desde Facturación.
+Lo que cubre (Resolución DIAN 165 de 2023, anexo técnico de factura electrónica 1.9): factura de venta y documento equivalente POS con numeración por resolución
+(prefijo, rango, vigencia, clave técnica) y avisos cuando se agota o vence; datos del emisor; adquirente con los tipos de documento de la DIAN y consulta de sus datos
+(en pruebas, la tabla de la guía de la DIAN); impuestos configurables en Datos de facturación (impoconsumo 8 % y IVA 19 %, cada uno se cobra o no; los productos exentos nunca llevan impuesto; cada venta guarda los que se cobraron); propina voluntaria fuera de la base (botones 5, 10 y 15 % o "Otro valor" para escribirla en pesos); medio de pago DIAN; CUFE y CUDE (SHA-384);
+XML UBL 2.1 sin firma; representación gráfica para imprimir; notas crédito con sus motivos; estados de envío, reenvío de pendientes y ambiente de habilitación o producción.
+Caja menor (gastos, retiros, ingresos), cierre con conteo por denominación, informe del turno con impuestos por tarifa y anulación de ventas.
+Archivos: caja.html, js/caja.js (cobrar, tickets, movimientos, turno), js/caja-facturacion.js (facturación y configuración), js/facturacion.js (la lógica de la DIAN y los
+proveedores), js/cobro.js (ventana de cobro de Pedidos, Caja e Inicio, con el detalle del pedido), js/ventanas.js (formularios emergentes), css/caja.css, css/cobro.css, css/widgets.css.
+
+FRONTERA ENTRE FRONTEND Y BACKEND
+Esta carpeta es una entrega frontend. Los flujos de pedidos, caja, inventario, reservas y facturación operan con datos locales de demostración en el navegador.
+No hay backend conectado. La emisión electrónica es una simulación: los documentos, códigos y estados mostrados no tienen validez fiscal ni se envían a la DIAN.
+Se retiraron del frontend la llamada REST directa y los campos para guardar token, PIN y clave técnica. La configuración local antigua se limpia al cargar esta copia.
+Para una versión de producción, el frontend debe llamar a un backend propio. Ese backend autentica empleados, aplica permisos, guarda datos en la base de datos,
+revalida cobros/promociones/inventario/reservas, asigna consecutivos y se comunica con el proveedor de facturación. Los secretos y certificados se guardan y usan solo en el servidor.
+La interfaz puede conservar validaciones y cálculos previos para orientar al usuario, pero el backend debe confirmar toda operación que cambie dinero, inventario o permisos.
+Confirma con el contador si el negocio está obligado a facturar y con el proveedor los códigos y el formato requeridos antes de integrar facturación real.
+
+
+PRODUCTOS Y RECETAS (productos.html)
+La carta como widgets, con categorías y buscador. Hay dos tipos: preparados (micheladas, cócteles), que llevan receta con sus insumos y sus indicaciones de preparación, y de reventa (botellas, cervezas, gaseosas), que se venden tal cual y solo descuentan su insumo del inventario. Cada producto muestra su precio, si es exento de impuesto y para cuántas unidades alcanza el inventario. Al tocarlo: costo de la receta, margen, editar datos, editar la receta (preparados: insumos, cantidades y preparación paso a paso) o el inventario (reventa: qué insumo descuenta), sacar de la carta o eliminar.
+Un producto fuera de la carta no aparece en Pedidos. Los impuestos y sus tarifas se configuran en Caja, Datos de facturación; aquí solo se marca si el producto es exento.
+Archivos: productos.html, js/productos.js, css/productos.css (comparte css/widgets.css y js/ventanas.js).
+
+IMAGENES
+Cada insumo del Inventario puede tener su imagen (Editar insumo o Nuevo insumo, campo Imagen). Los productos que se venden tal cual usan la imagen de su insumo en Pedidos y en Productos y recetas; así una sola imagen sirve para la botella y la media. Un producto también puede tener su propia imagen (Productos y recetas, Editar datos), que se usa en lugar de la del insumo. Los preparados (micheladas) solo usan su propia imagen.
+Las imágenes se muestran completas dentro de su cuadro (sin recortarlas). Se reducen a 480 px y se guardan en el navegador (localStorage); si ya no cabe más, el sistema avisa y no guarda el cambio.
+
+
+MENÚ INICIAL Y ÁREAS (index.html)
+Al abrir el sistema aparece un menú para elegir el área: Mesas, Bar, Cocina, Cajera, Administrador o Cliente. No hay inicio de sesión ni contraseña; el área elegida se guarda en la pestaña (sessionStorage 'rn_area') y la barra lateral trae "Cambiar de área".
+El panel de siempre (indicadores) pasó a inicio.html.
+Qué ve cada área (se define en js/area.js, objeto AREAS; si la página no corresponde, vuelve al inicio del área):
+Administrador: todo. Cajera: Caja, Pedidos y Mesas. Mesas: Mesas, Pedidos y Reservaciones; puede tomar pedidos pero no cobrar (el cobro lo hace la cajera). Bar y Cocina: solo Despacho. Cliente: cliente.html (carta y reservar mesa).
+Despacho (despacho.html, js/despacho.js): lista lo pendiente de cada pedido según el campo "Se despacha en" del producto (Bar o Cocina, en Productos y recetas, Editar datos). Muestra la preparación de la receta y permite despachar una línea o todo el pedido; descuenta el inventario según la receta. El administrador alterna entre Bar y Cocina.
+Cliente (cliente.html, js/cliente.js): carta con precios y "Agotado por hoy", y reserva de mesa sin llamar: elige fecha, hora y personas y el sistema asigna la mesa libre más pequeña; la reservación queda PENDIENTE en Reservaciones.
+Archivos: index.html, inicio.html, despacho.html, cliente.html, js/area.js, js/despacho.js, js/cliente.js, css/areas.css.
+
+
+INVENTARIO COMO KARDEX (inventario.html, js/inventario.js, css/inventario.css)
+Los insumos se agrupan por categorías, con chips y conteo como en Productos: las mismas de la carta cuando se venden tal cual (Aguardiente, Ron, Whisky, Tequila, Vodka, Brandy, Cerveza) y las propias de los insumos (Gaseosas, Agua, Energizantes e hidratantes, Otras bebidas, Frutas y verduras, Despensa). Al editar un insumo se elige su categoría o se escribe una nueva; los de ejemplo se clasifican por su nombre (datos.js, categoriaDeInsumo). Cada insumo es un widget (existencia, mínimo, costo promedio, nivel y estado); los de stock bajo salen resaltados. Se busca por nombre y se filtra por Todos, Stock bajo o Normal; la vista "Todos los movimientos" lista el historial de todo el inventario.
+Al tocar un insumo se abre su kardex: saldo inicial y, por cada movimiento, lo que entra, lo que sale y cómo queda el saldo (cantidad, costo por unidad y valor), con totales. Método: costo promedio ponderado. Una entrada con su costo por unidad actualiza el promedio; las salidas, mermas y despachos salen al costo promedio del momento; un ajuste deja la existencia en lo contado y el kardex registra la diferencia.
+El kardex se puede filtrar por tipo de movimiento y por periodo (desde, hasta; el saldo inicial pasa a ser el de esa fecha) y se imprime con "Imprimir kardex". Una entrada lleva su fecha de compra y, si quiere, su fecha de expiración; ambas se ven en el detalle del kardex y el insumo muestra su próxima expiración. Desde el kardex se registra un movimiento (entrada, salida, merma o ajuste; una salida no puede superar lo que hay), se edita el insumo (unidad, mínimo, imagen) o se elimina (no se puede si lo usa una receta). Un insumo nuevo se crea con su existencia inicial, que queda como saldo inicial.
+Cada movimiento guarda lo que había antes y el costo promedio (datos.js, registrarMovimiento y kardexDe). Los movimientos de ejemplo no traían esos datos: el kardex los reconstruye hacia atrás desde la existencia actual. La tabla de alertas de stock mínimo ya no se muestra: el filtro Stock bajo cumple esa función (las alertas siguen guardándose).
+
+
+EVENTOS Y PROMOCIONES, CLIENTES (eventos.html, clientes.html, js/eventos.js, js/clientes.js)
+Mismo estilo de Productos e Inventario: widgets, filtros, ventanas de detalle y de edición. Eventos: próximos, en curso y finalizados, con sus promociones y reservaciones. Notificaciones: lista de envíos a clientes (las pendientes se marcan como enviadas). Clientes: personas y empresas, autorización de datos (Ley 1581 de 2012), reservaciones y compras de cada cliente; al renombrar un cliente se actualiza en reservaciones, pedidos y ventas.
+
+PROMOCIONES (js/datos.js: evaluarPromo, promosAplicables)
+Cada promoción define qué descuenta (porcentaje, lleva N y paga M como 2x1 o 3x2, valor fijo menos por unidad, precio especial), a qué productos (toda la carta, categorías o productos escogidos), cuándo (fechas, días de la semana, franja de horas, solo durante un evento), a qué clientes (todos, registrados, personas, empresas, frecuentes de 3 o más compras, nuevos sin compras, cumpleañeros ±3 días), cuenta mínima y tope de unidades por cuenta.
+En la ventana de cobro hay un campo Cliente y solo se ofrecen las promociones que aplican a esa cuenta en ese momento, con lo que descuentan; se marca la que más descuenta y se puede quitar. El descuento toca solo los productos de la promoción (en 2x1, las unidades más baratas son las gratis) y el impuesto se calcula sobre lo que realmente se cobra: los productos exentos nunca llevan impuesto.
+
+COMPROBANTE DE PAGO IMPRESO (js/ticket.js, css/ticket.css)
+Al confirmar un cobro se imprime el comprobante de Ranchenatos en papel térmico de 58 mm, del largo que necesite el detalle, en blanco y negro, con el logo, los datos de la empresa, mesa, cajero, cliente, productos, subtotal, descuento con el nombre de la promoción, impuestos, propina, total, forma de pago y cambio. Sin documento electrónico se llama "Comprobante de pago" y dice que no es una factura (no se llama factura ni recibo). Solo cuando la DIAN está configurada (NIT del emisor y numeración vigente) y la empresa cobra impoconsumo o IVA, el cobro emite documento equivalente POS o factura electrónica y el papel lleva ese nombre, su número y el CUFE o CUDE. En Caja, la categoría Comprobantes muestra cada venta con la vista previa del papel y los botones Imprimir, Copiar comprobante, Generar factura o documento (si la DIAN está lista) y Anular venta.
+
+IMPUESTOS POR PRODUCTO (legislación colombiana)
+Cada producto lleva una sola clase de impuesto (Productos y recetas, Editar datos): impoconsumo 8 % (restaurantes, bares, tabernas y discotecas, Estatuto Tributario art. 512-1; no se suma al IVA), IVA 19 % (art. 468), IVA 5 % (art. 468-1), exento de IVA (tarifa 0 % reportada, arts. 477 a 481) o excluido (art. 424, no causa impuesto). El IVA y el exento solo están disponibles si la empresa es responsable de IVA (Caja, Datos de facturación, Emisor, Régimen); un bar con impoconsumo normalmente es no responsable de IVA. El impuesto al consumo de licores es del productor o importador y ya viene en el precio de compra: no se cobra aparte. La propina no es un impuesto.
+Caja, Datos de facturación, Impuestos define cuáles se cobran y a qué tarifa. El cobro, el ticket y los documentos electrónicos calculan cada impuesto sobre la base de los productos que lo llevan, después del descuento; los exentos salen con IVA 0 % y los excluidos sin impuesto. Confirma con el contador el régimen y las clases de impuesto de cada producto.
+La ventana de cobro ahora va en el orden de la cuenta: cliente, promoción, propina, método de pago (con el efectivo recibido) y comprobante.
+
+CONFIRMAR EL PEDIDO Y AVISOS ENTRE ÁREAS (js/avisos.js, js/pedidos.js)
+En Pedidos, lo que toma el mesero, la cajera o el administrador queda "Por confirmar": no llega a la cocina ni al bar hasta que se pulsa "Confirmar pedido", que abre una ventana para leerle el pedido al cliente y enviarlo con "Sí, enviar". Al confirmar, el bar y la cocina reciben una alerta con sonido; cuando despachan, el mesero recibe una notificación; los pedidos que el cliente hace desde la app (Pedir ahora) avisan al bar, la cocina, el mesero y la caja. No se puede cobrar un pedido sin confirmar. El mesero cobra al entregar solo si el rol Mesero tiene activado "Puede cobrar al entregar" (Usuarios y roles); si no, cobra la caja. Bar y cocina ven Productos e Inventario sin cambiarlos y su menú empieza por Despacho. Los avisos viven en el navegador: solo llegan entre pestañas del mismo navegador (con varios aparatos haría falta un servidor).
+
+FACTURA ELECTRÓNICA O COMPROBANTE INTERNO
+Caja, Datos de facturación empieza preguntando si el negocio está obligado a facturar electrónicamente. Si responde que no, la página muestra solo los datos del negocio (nombre comercial, propietario, documento, dirección y teléfono) y el comprobante (título: comprobante de pago, de venta interno, cuenta de mesa o estado de cuenta, que nunca dice factura; número de control consecutivo; leyenda "Régimen Simplificado - No Responsable de Impuesto al Consumo. No obligado a facturar."), no se cobran impuestos y se oculta la categoría Facturación. Si responde que sí, aparecen el emisor, los impuestos, la numeración autorizada y la conexión con la DIAN, y con la DIAN lista se emite documento equivalente POS o factura electrónica.
+En Caja, Por cobrar: azul lo ya cobrado, gris lo pendiente de cobro y blanco los pedidos por confirmar.
+Reservaciones: al crear o editar una reservación se puede agregar un pedido (Agregar pedido); al llegar el cliente el pedido pasa a la mesa por confirmar.
+
+INGRESO POR PERSONA Y ROL (index.html, js/entrada.js, js/area.js)
+La primera pantalla pregunta quién eres (empleados activos, o Cliente) y entra sin contraseña por ahora. Después muestra "¿Dónde vas a trabajar hoy?" solo con las áreas que permite el rol, más las que el administrador le haya asignado. Con "Pedir otra área" se envía una solicitud al administrador, que la aprueba o rechaza en Usuarios y roles, Solicitudes; la persona recibe el aviso. Cada rol define sus áreas de trabajo y las que puede pedir (Mesero puede pedir Cajera, un mesero no puede ir a cocina). Roles nuevos: Cocinero, Bartender y Encargado de ventas (área Ventas: reservaciones, eventos, clientes y reportes). Lo que cada persona registra queda a su nombre y los avisos van a la persona que corresponde.
+
+CICLO DE LA MESA Y AVISOS
+Llega una reservación (desde la app del cliente): aviso al área Ventas y al administrador, que la gestionan en Reservaciones. El cliente llega, el mesero lo ubica y toma el pedido; al confirmarlo, llega a bar y/o cocina según cada producto (Bar o Restaurante, en Productos y recetas). Al despachar, aviso al mesero que lo tomó. El cliente puede llamar al mesero o pedir la cuenta desde la app: avisan al mesero y a la caja. Al cobrar en caja, la mesa queda "Por limpiar" y avisa a los meseros; cuando uno la marca limpia (Mesas, Marcar limpia) vuelve a estar libre. Cuando un insumo queda bajo el mínimo o agotado, avisa al administrador. Cuando llega una reservación del día, avisa a los meseros.

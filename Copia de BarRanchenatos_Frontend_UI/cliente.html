@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carta y reservas · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tema.css">
+  <link rel="stylesheet" href="css/widgets.css">
+  <link rel="stylesheet" href="css/areas.css">
+  <script src="js/area.js"></script>
+</head>
+<body class="tema cliente-pag">
+<header class="cl-cab">
+  <div class="cl-marca"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+  <button type="button" class="btn btn-sm" id="cl-salir">Volver al inicio</button>
+</header>
+<main class="cl-main" id="contenido">
+  <div class="res-filtros" id="cl-tabs" role="group" aria-label="Qué quieres hacer"></div>
+
+  <section id="cl-carta" aria-label="Carta">
+    <div class="cl-barra"><input type="search" id="cl-buscar" class="buscador" placeholder="Buscar en la carta" aria-label="Buscar en la carta" autocomplete="off"></div>
+    <div class="res-filtros" id="cl-cats" role="group" aria-label="Categorías"></div>
+    <div id="cl-lista"></div>
+    <p class="cl-nota" id="cl-nota"></p>
+  </section>
+
+  <div class="cl-barra-pedido" id="cl-barra-pedido" hidden></div>
+
+  <section id="cl-ahora" aria-label="Pedir desde tu mesa" hidden>
+    <form id="cl-ahora-form" class="cl-form" novalidate>
+      <h2>Pide desde tu mesa</h2>
+      <p class="cl-ayuda">¿Ya estás en el bar? Elige tu mesa y envía tu pedido: llega directo a la barra o a la cocina y el mesero lo recibe. Lo pagas al final, con el mesero o en la caja.</p>
+      <div class="grid-res">
+        <div class="campo"><label for="ah_mesa">Tu mesa</label><select id="ah_mesa" name="mesa" required></select></div>
+        <div class="campo"><label for="ah_nombre">Tu nombre (opcional)</label><input id="ah_nombre" name="nombre" type="text" maxlength="60" autocomplete="name"></div>
+      </div>
+      <div class="cl-pedido" id="cl-ahora-pedido"></div>
+      <p class="f-error" id="cl-ahora-error" role="alert"></p>
+      <div class="cl-llamadas"><button type="button" class="btn" id="cl-llamar">Llamar al mesero</button><button type="button" class="btn" id="cl-cuenta">Pedir la cuenta</button></div>
+      <p class="cl-ayuda" id="cl-ahora-aviso" role="status"></p>
+      <button type="submit" class="btn btn-primary cl-enviar" id="cl-ahora-enviar">Enviar pedido a la barra y la cocina</button>
+    </form>
+    <div class="cl-listo" id="cl-ahora-listo" hidden></div>
+  </section>
+
+  <section id="cl-reservar" aria-label="Reservar una mesa y pedir" hidden>
+    <form id="cl-form" class="cl-form" novalidate>
+      <h2>Reserva tu mesa y pide por adelantado</h2>
+      <p class="cl-ayuda">Cuéntanos cuándo vienes y cuántos son. Si quieres, deja tu pedido listo desde la carta y asegúralo con un abono. El bar te confirma por teléfono.</p>
+      <div class="grid-res">
+        <div class="campo campo-ancho"><label for="cl_nombre">Tu nombre</label><input id="cl_nombre" name="nombre" type="text" maxlength="60" autocomplete="name" required></div>
+        <div class="campo"><label for="cl_tel">Teléfono</label><input id="cl_tel" name="telefono" type="tel" inputmode="tel" maxlength="15" autocomplete="tel" required></div>
+        <div class="campo"><label for="cl_pers">Personas</label><input id="cl_pers" name="personas" type="number" min="1" max="30" inputmode="numeric" value="2" required></div>
+        <div class="campo"><label for="cl_fecha">Fecha</label><input id="cl_fecha" name="fecha" type="date" required></div>
+        <div class="campo"><label for="cl_hora">Hora</label><input id="cl_hora" name="hora" type="time" value="20:00" required></div>
+        <div class="campo campo-ancho"><label for="cl_obs">¿Algo que debamos saber? (opcional)</label><input id="cl_obs" name="obs" type="text" maxlength="160" placeholder="Cumpleaños, alergias, decoración…"></div>
+      </div>
+      <div class="cl-pedido" id="cl-pedido"></div>
+      <fieldset class="cl-abono" id="cl-abono" hidden>
+        <legend>Abono para asegurar tu pedido</legend>
+        <p class="cl-ayuda" id="cl-abono-ayuda"></p>
+        <div class="chips-res" id="cl-abono-pct" role="radiogroup" aria-label="Cuánto abonas"></div>
+        <div class="campo" id="cl-abono-otro" hidden><label for="cl_abono_valor">Valor del abono ($)</label><input id="cl_abono_valor" name="abono_valor" type="number" min="0" step="100" inputmode="numeric"></div>
+        <div class="campo"><span class="etiqueta-campo" id="cl-metodo-etq">¿Cómo pagas el abono?</span><div class="chips-res" id="cl-abono-metodos" role="radiogroup" aria-labelledby="cl-metodo-etq"></div></div>
+        <div class="campo"><label for="cl_abono_ref">Número de transacción</label><input id="cl_abono_ref" name="abono_ref" type="text" maxlength="60" placeholder="El que te da tu banco o billetera" autocomplete="off"></div>
+        <p class="cl-politica" id="cl-politica"></p>
+        <label class="campo-check"><input type="checkbox" id="cl_acepta" name="acepta"> Entiendo la política de abono y penalización</label>
+      </fieldset>
+      <p class="f-error" id="cl-error" role="alert"></p>
+      <button type="submit" class="btn btn-primary cl-enviar" id="cl-enviar">Solicitar reservación</button>
+    </form>
+    <div class="cl-listo" id="cl-listo" hidden></div>
+  </section>
+</main>
+<script src="js/datos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cliente.js"></script>
+</body>
+</html>

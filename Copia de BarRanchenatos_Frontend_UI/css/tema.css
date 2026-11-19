@@ -1,0 +1,42 @@
+/* Tema de la aplicación: colores y formas tomados del diseño de Canva del cliente
+   (azul marino, gris y celeste, cajas con borde fino y formas poligonales translúcidas).
+   Se activa con la clase "tema" en el <body>. Lo usan Inicio y Pedidos. */
+
+:root:not([data-theme="oscuro"]) body.tema {
+  --bg: #F6F6F6; --surface: #FFFFFF; --surface-2: #ECEEF0; --line: rgba(18, 30, 66, .16);
+  --text: #121E42; --muted: #596782;
+  --primary: #121E42; --primary-ink: #FFFFFF; --primary-soft: #DCEFF1; --secondary: #596782; --pink: #596782;
+  --ok: #121E42; --warn: #596782; --bad: #121E42; --info: #596782; --proc: #596782; --mute: #596782;
+  --side-bg: rgba(255, 255, 255, .86); --side-text: #121E42; --side-muted: #596782; --side-line: rgba(18, 30, 66, .16);
+  --marco: #121E42; --bloque: rgba(186, 186, 186, .55); --cristal: rgba(255, 255, 255, .78);
+  --c0: #121E42; --c1: #596782; --c2: #7FC4CE; --c3: #BABABA; --c4: #3D5A99; --c5: #96A2AE;
+}
+:root[data-theme="oscuro"] body.tema {
+  --bg: #0A1230; --surface: #121E42; --surface-2: #1A2A5A; --line: rgba(207, 234, 237, .2);
+  --text: #F6F6F6; --muted: #BAC6D2;
+  --primary: #CFEAED; --primary-ink: #121E42; --primary-soft: #1E3262; --secondary: #96A2AE; --pink: #96A2AE;
+  --ok: #CFEAED; --warn: #96A2AE; --bad: #CFEAED; --info: #BAC6D2;
+  --side-bg: rgba(10, 18, 48, .9); --side-text: #F6F6F6; --side-muted: #96A2AE; --side-line: rgba(207, 234, 237, .2);
+  --marco: rgba(207, 234, 237, .55); --bloque: rgba(150, 162, 174, .28); --cristal: rgba(18, 30, 66, .78);
+  --c0: #CFEAED; --c1: #7FC4CE; --c2: #96A2AE; --c3: #596782; --c4: #9DB5F0; --c5: #BAC6D2;
+}
+body.tema { background: var(--bg); position: relative; }
+
+/* Formas poligonales del fondo, suaves y en las esquinas */
+body.tema::before, body.tema::after { content: ''; position: fixed; right: 0; pointer-events: none; z-index: 0; }
+body.tema::before { top: 0; width: 30vw; height: 26vh; background: linear-gradient(140deg, rgba(207, 234, 237, .6), rgba(207, 234, 237, .06)); clip-path: polygon(34% 0, 100% 0, 100% 78%, 62% 100%, 0 38%); }
+body.tema::after { bottom: 0; width: 26vw; height: 32vh; background: linear-gradient(200deg, rgba(89, 103, 130, .42), rgba(150, 162, 174, .06)); clip-path: polygon(100% 0, 100% 100%, 18% 100%, 0 58%, 44% 22%); }
+:root[data-theme="oscuro"] body.tema::before { background: linear-gradient(140deg, rgba(207, 234, 237, .16), rgba(207, 234, 237, 0)); }
+:root[data-theme="oscuro"] body.tema::after { background: linear-gradient(200deg, rgba(89, 103, 130, .4), rgba(89, 103, 130, 0)); }
+body.tema .shell { position: relative; z-index: 1; }
+
+/* Menú lateral */
+body.tema .sidebar { backdrop-filter: blur(3px); }
+body.tema .nav a[aria-current="page"] { background: var(--primary-soft); color: var(--text); border-left-color: var(--marco); }
+body.tema .brand { color: var(--text); }
+
+/* Encabezado de cada pantalla */
+.encabezado { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.encabezado .intro { margin: 0; font-family: Poppins, Inter, sans-serif; font-weight: 300; font-size: 1.05rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text); }
+.encabezado .acciones { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.encabezado .btn { border-color: var(--marco); border-radius: 10px; min-height: 42px; background: var(--cristal); color: var(--text); }

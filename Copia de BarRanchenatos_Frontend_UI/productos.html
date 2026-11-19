@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/area.js"></script>
+  <title>Productos y recetas · Bar Ranchenatos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=1792164060">
+  <link rel="stylesheet" href="css/tema.css?v=1792164060">
+  <link rel="stylesheet" href="css/widgets.css?v=1792166957">
+  <link rel="stylesheet" href="css/productos.css">
+</head>
+<body class="tema productos-pag">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<div class="shell">
+  <header class="topbar">
+    <button class="icon-btn" id="btn-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
+    <img src="assets/ranchenatos_isotipo.svg" alt="">
+    <strong>Ranchenatos</strong>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos"><span>RANCHENATOS</span></div>
+    <nav aria-label="Principal">
+      <div class="nav-label">Operación</div>
+      <ul class="nav">
+        <li><a href="inicio.html"><img class="ico" src="icons/inicio.svg" alt="">Inicio</a></li>
+        <li><a href="pedidos.html"><img class="ico" src="icons/pedidos.svg" alt="">Pedidos</a></li>
+        <li><a href="mesas.html"><img class="ico" src="icons/mesas.svg" alt="">Mesas</a></li>
+        <li><a href="reservas.html"><img class="ico" src="icons/reserva.svg" alt="">Reservaciones</a></li>
+        <li><a href="despacho.html"><img class="ico" src="icons/inicio/en_preparacion.svg" alt="">Despacho</a></li>
+        <li><a href="caja.html"><img class="ico" src="icons/efectivo.svg" alt="">Caja</a></li>
+      </ul>
+      <div class="nav-label">Catálogo</div>
+      <ul class="nav">
+        <li><a href="productos.html" aria-current="page"><img class="ico" src="icons/productos.svg" alt="">Productos y recetas</a></li>
+        <li><a href="inventario.html"><img class="ico" src="icons/inventario.svg" alt="">Inventario<span class="count" aria-label="1 alerta">1</span></a></li>
+        <li><a href="eventos.html"><img class="ico" src="icons/calendario.svg" alt="">Eventos y promociones</a></li>
+      </ul>
+      <div class="nav-label">Gestión</div>
+      <ul class="nav">
+        <li><a href="clientes.html"><img class="ico" src="icons/clientes.svg" alt="">Clientes</a></li>
+        <li><a href="reportes.html"><img class="ico" src="icons/reportes.svg" alt="">Reportes</a></li>
+        <li><a href="usuarios.html"><img class="ico" src="icons/usuarios.svg" alt="">Usuarios y roles</a></li>
+      </ul>
+    </nav>
+    <div class="userbox">
+      <strong>Carlos Ranchenatos</strong>Administrador
+      <button class="btn btn-sm" id="btn-tema" type="button">Modo claro u oscuro</button>
+      <button class="enlace" id="btn-reiniciar" type="button">Restablecer datos de ejemplo</button>
+    </div>
+  </aside>
+
+  <main class="main" id="contenido">
+    <header class="encabezado">
+      <h1 class="sr-only">Productos y recetas</h1>
+      <p class="intro">Productos y recetas</p>
+      <div class="actions"><button type="button" class="btn btn-primary" id="p-nuevo">+ Nuevo producto</button></div>
+    </header>
+
+    <div class="p-barra">
+      <input type="search" id="p-buscar" class="buscador" placeholder="Buscar producto" aria-label="Buscar producto" autocomplete="off">
+      <div class="segmento" id="p-estados" role="group" aria-label="Estado"></div>
+    </div>
+    <div class="res-filtros" id="p-cats" role="group" aria-label="Categorías"></div>
+    <p class="msg" id="p-aviso" role="status"></p>
+
+    <section id="p-lista" aria-live="polite"></section>
+  </main>
+</div>
+<script src="js/datos.js"></script>
+<script src="js/main.js"></script>
+<script src="js/ventanas.js"></script>
+<script src="js/productos.js"></script>
+</body>
+</html>

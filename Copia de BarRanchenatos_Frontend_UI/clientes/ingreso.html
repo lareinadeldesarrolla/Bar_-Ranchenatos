@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ingreso de clientes | Bar Ranchenatos</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tema.css">
+    <link rel="stylesheet" href="../css/cliente.css">
+</head>
+
+<body class="tema cliente-acceso">
+
+    <main class="cliente-contenedor">
+
+        <header class="cliente-marca">
+            <a href="../index.html">
+                <img src="../assets/ranchenatos_isotipo.svg" alt="Logo Bar Ranchenatos">
+            </a>
+
+            <p>RANCHENATOS</p>
+            <span>Tradición, sabor y buenos momentos</span>
+        </header>
+
+        <section class="cliente-panel">
+
+            <div class="cliente-encabezado">
+                <h1>¡Qué bueno tenerte aquí!</h1>
+                <p>Ingresa a tu cuenta para disfrutar de nuestros servicios.</p>
+            </div>
+
+            <form id="form-ingreso" class="cliente-formulario">
+
+                <div class="campo-cliente">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" autocomplete="email"
+                        required>
+                </div>
+
+                <div class="campo-cliente">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password" required>
+                </div>
+
+                <p id="mensaje-ingreso" class="mensaje-cliente" aria-live="polite"></p>
+
+                <button type="submit" class="btn-cliente">
+                    Ingresar
+                </button>
+
+            </form>
+
+            <div class="cliente-registro">
+                <p>¿Todavía no tienes una cuenta?</p>
+                <a href="registro.html">Crear una cuenta</a>
+            </div>
+
+        </section>
+
+        <footer class="cliente-pie">
+            <a href="../index.html">Volver al inicio</a>
+            <p>Bar Ranchenatos · Vive la tradición</p>
+        </footer>
+
+    </main>
+
+    <script src="../js/ingreso.js"></script>
+
+</body>
+</html>

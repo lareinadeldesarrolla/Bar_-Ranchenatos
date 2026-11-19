@@ -1,0 +1,428 @@
+/* Pedidos: caja registradora con el diseño de Inicio (cajas con borde marino, bloques grises,
+   solo azul marino, gris y celeste). Pantalla fija: la carta se desplaza por dentro y el ticket queda a la vista. */
+
+@media (min-width: 961px) {
+  body.pedidos { height: 100vh; overflow: hidden; }
+  body.pedidos .shell { height: 100vh; min-height: 0; }
+  body.pedidos .main { height: 100vh; max-width: none; display: flex; flex-direction: column; gap: .9rem; padding: 1.1rem 1.8rem 1.3rem; overflow: hidden; }
+}
+.estado-caja { margin: 0; font-size: .86rem; color: var(--muted); }
+.estado-caja.cerrada { color: var(--text); font-weight: 700; }
+.estado-caja.cerrada::before { content: '● '; }
+
+.pos { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 25rem; gap: 1.2rem; margin: 0; }
+.carta { min-height: 0; display: flex; flex-direction: column; gap: .9rem; overflow-y: auto; padding: .15rem .3rem .5rem .15rem; }
+
+/* Mesas: el estado se ve por el relleno (libre vacía, ocupada marino, reservada gris punteada) */
+.mesas { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; }
+.mesa { display: flex; align-items: center; gap: .6rem; min-width: 8.6rem; padding: .5rem .9rem; font: inherit; text-align: left; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 12px; cursor: pointer; }
+.mesa img { width: 1.6rem; height: 1.6rem; flex: none; }
+.mesa b { display: block; font-size: .92rem; line-height: 1.2; }
+.mesa small { display: block; color: var(--muted); font-size: .76rem; font-variant-numeric: tabular-nums; }
+.mesa.est-OCUPADA { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+.mesa.est-OCUPADA small { color: inherit; opacity: .8; }
+.mesa.est-OCUPADA img { filter: brightness(0) invert(1); }
+.mesa.est-RESERVADA { background: var(--bloque); border-style: dashed; }
+.mesa:hover { box-shadow: 0 0 0 2px var(--primary-soft), 0 0 0 3px var(--marco); }
+.mesa.sel { box-shadow: 0 0 0 3px var(--primary-soft), 0 0 0 5px var(--marco); }
+:root[data-theme="oscuro"] body.pedidos .mesa.est-OCUPADA img { filter: none; }
+:root[data-theme="oscuro"] body.pedidos .mesa:not(.est-OCUPADA) img, :root[data-theme="oscuro"] body.pedidos .search img { filter: brightness(0) invert(1); }
+
+/* Búsqueda y categorías */
+.carta-barra { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin: 0; }
+.carta-barra .search { margin: 0; flex: 0 1 17rem; position: relative; }
+.carta-barra .search input { border: 1px solid var(--marco); border-radius: 999px; background: var(--cristal); padding-left: 2.5rem; min-height: 42px; }
+.carta-barra .search img { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); width: 1.1rem; height: 1.1rem; opacity: 1; }
+.chips { gap: .5rem; }
+.chip { border: 1px solid var(--marco); background: var(--cristal); color: var(--text); min-height: 38px; padding: .25rem 1rem; font-weight: 500; }
+.chip[aria-pressed="true"] { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+
+/* Productos */
+.productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); gap: .8rem; margin: 0; }
+.producto { position: relative; display: grid; align-content: space-between; gap: .6rem; min-height: 7.6rem; padding: .85rem 1rem; text-align: left; font: inherit; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 14px; cursor: pointer; }
+.producto b { font-size: .95rem; font-weight: 700; line-height: 1.25; padding-right: 1.9rem; }
+.producto .precio { justify-self: start; background: var(--bloque); border-radius: 8px; padding: .2rem .6rem; font-weight: 700; font-size: .92rem; font-variant-numeric: tabular-nums; color: var(--text); }
+.producto em { font-style: normal; font-size: .76rem; color: var(--muted); }
+.producto .agotado { font-weight: 700; color: var(--text); }
+.producto:hover:not(:disabled) { box-shadow: 0 0 0 2px var(--primary-soft), 0 0 0 3px var(--marco); }
+.producto.en-pedido { background: var(--primary-soft); box-shadow: 0 0 0 2px var(--marco); }
+.producto:disabled { opacity: .55; cursor: not-allowed; border-style: dashed; }
+
+/* Ticket */
+.ticket { min-height: 0; display: flex; flex-direction: column; border: 1px solid var(--marco); border-radius: 14px; background: var(--cristal); position: static; max-height: none; }
+.ticket-cab { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; padding: 1rem 1.1rem .8rem; border-bottom: 1px dashed var(--marco); }
+.ticket-cab h2 { font-size: 1.25rem; }
+.ticket-cab .hint { margin: .1rem 0 0; font-size: .8rem; color: var(--muted); }
+.lineas { flex: 1; min-height: 0; overflow-y: auto; padding: 0 1.1rem; margin: 0; list-style: none; }
+.linea { display: grid; gap: .35rem; padding: .7rem 0; border-bottom: 1px dashed var(--line); }
+.linea:last-child { border-bottom: 0; }
+.linea:has(.fija) { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: .6rem; }
+.linea:has(.fija) .l-top, .linea:has(.fija) .nota, .linea:has(.fija) .l-nota { grid-column: 1 / -1; }
+.l-top { display: flex; justify-content: space-between; gap: .8rem; font-weight: 700; }
+.l-sub { display: flex; align-items: center; gap: .6rem; font-size: .82rem; color: var(--muted); }
+.l-nota { font-size: .82rem; color: var(--muted); font-style: italic; }
+.l-acc { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+.cantidad { display: inline-flex; align-items: center; gap: .3rem; }
+.paso { width: 2rem; height: 2rem; border: 1px solid var(--marco); background: var(--cristal); color: var(--text); border-radius: 50%; cursor: pointer; font-size: 1.05rem; line-height: 1; padding: 0; }
+.paso:hover:not(:disabled) { background: var(--primary); color: var(--primary-ink); }
+.paso:disabled { opacity: .35; cursor: not-allowed; }
+.cant { min-width: 1.6rem; text-align: center; font-weight: 700; }
+.cant.fija { color: var(--muted); font-weight: 600; }
+.acciones { display: inline-flex; gap: .7rem; }
+.enlace { color: var(--text); font-weight: 600; }
+.enlace.peligro { color: var(--muted); }
+.vacio { color: var(--muted); text-align: center; padding: 2rem 0; }
+.ticket-pie { flex: none; display: grid; gap: .5rem; padding: .9rem 1.1rem 1.1rem; border-top: 1px dashed var(--marco); }
+.ticket-pie .total-line { font-size: .9rem; }
+.ticket-pie .total-line.big { background: var(--bloque); border-radius: 12px; padding: .6rem .9rem; margin: .2rem 0; font-size: 1.35rem; font-weight: 700; border-top: 0; }
+.ticket-pie .btn { min-height: 3rem; font-size: 1rem; border-color: var(--marco); border-radius: 12px; }
+.ticket-pie .btn-primary { background: var(--primary); color: var(--primary-ink); }
+.ticket-pie .btn[disabled] { background: var(--bloque); color: var(--muted); border-color: var(--line); opacity: 1; }
+.ticket-pie .motivo { margin: 0; text-align: center; min-height: 1.1em; font-size: .82rem; color: var(--muted); }
+.ticket-pie .msg { margin: 0; background: var(--bloque); color: var(--text); font-size: .85rem; }
+
+.t-cab { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+.t-cab h2 { font-size: 1.1rem; }
+#t-pedidos th { background: transparent; font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--marco); padding: .3rem .8rem .4rem 0; }
+#t-pedidos td { border-bottom: 1px dashed var(--line); padding: .6rem .8rem .6rem 0; }
+#t-pedidos tr.ir { cursor: pointer; }
+#t-pedidos tr.ir:hover td { background: var(--bloque); }
+
+@media (max-width: 960px) {
+  .pos { grid-template-columns: 1fr; }
+  .carta { overflow: visible; }
+  .ticket { max-height: none; }
+  .lineas { overflow: visible; }
+}
+@media (max-width: 860px) {
+  body.pedidos .main { padding: 1rem; }
+}
+
+/* Detalles: el texto de la mesa hereda su color (se lee sobre el relleno marino) y las cinco mesas caben en una fila */
+.mesa span { color: inherit; font-size: inherit; }
+.mesa { min-width: 7.2rem; padding: .5rem .75rem; }
+
+/* Mesas como tarjetas: número, valor a cobrar y la opción de entrar. Libre en blanco, reservada en gris, ocupada en azul. */
+.mesas { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.6rem, 1fr)); gap: .7rem; }
+.mesa { display: grid; grid-template-rows: auto 1fr auto; gap: .45rem; min-width: 0; min-height: 6.6rem; padding: .75rem .9rem .65rem; border-radius: 14px; align-items: start; }
+.mesa .m-cab { display: flex; align-items: center; gap: .6rem; }
+.mesa .m-cab img { width: 1.8rem; height: 1.8rem; }
+.mesa .m-cab b { font-size: 1.02rem; display: inline; }
+.mesa .m-valor { align-self: center; font-size: 1.2rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.mesa .m-valor.libre { font-size: 1.02rem; font-weight: 600; color: var(--muted); }
+.mesa .m-accion { justify-self: end; font-size: .76rem; font-weight: 700; }
+.mesa .m-accion::after { content: ' →'; }
+.mesa.est-OCUPADA .m-valor.libre { color: inherit; }
+.mesa.est-RESERVADA { border-style: solid; }
+.mesa.est-RESERVADA .m-valor.libre { color: var(--text); }
+.mesas { grid-template-columns: repeat(auto-fit, minmax(6.8rem, 1fr)); gap: .6rem; }
+.mesa { padding: .7rem .75rem .6rem; }
+.mesa .m-cab { gap: .5rem; }
+.mesa .m-cab img { width: 1.6rem; height: 1.6rem; }
+
+/* Mesas cuadradas, más grandes y con aire respecto a los bordes */
+.carta { padding: .5rem; }
+.mesas { grid-template-columns: repeat(auto-fill, minmax(8.4rem, 10rem)); gap: .9rem; justify-content: start; padding: .3rem; }
+.mesa { aspect-ratio: 1 / 1; min-height: 0; padding: 1rem .95rem .85rem; }
+.mesa .m-cab { gap: .5rem; }
+.mesa .m-cab b { text-transform: uppercase; letter-spacing: .03em; font-size: .92rem; }
+.mesa .m-valor { font-size: 1.25rem; }
+
+/* Los productos se desplazan: mesas, búsqueda y categorías quedan fijas arriba */
+.carta { overflow-y: auto; }
+.productos { flex: 1 1 auto; min-height: 14rem; overflow-y: auto; align-content: start; padding: .3rem .5rem .5rem .3rem; margin: 0 -.3rem 0 -.3rem; }
+.productos, .lineas { scrollbar-width: thin; scrollbar-color: var(--c5) transparent; }
+.productos::-webkit-scrollbar, .lineas::-webkit-scrollbar { width: 10px; }
+.productos::-webkit-scrollbar-thumb, .lineas::-webkit-scrollbar-thumb { background: var(--c5); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+.productos::-webkit-scrollbar-track, .lineas::-webkit-scrollbar-track { background: transparent; }
+@media (max-width: 960px) { .productos { overflow: visible; min-height: 0; } }
+
+/* La fila de la caja registradora mide lo que mide la pantalla; lo que sobre se desplaza por dentro */
+.pos { grid-template-rows: minmax(0, 1fr); }
+@media (max-width: 960px) { .pos { grid-template-rows: none; } }
+.pos { align-items: stretch; }
+
+/* En pantallas poco altas las mesas se compactan para dejar espacio a los productos */
+.productos { min-height: 8.5rem; }
+@media (max-height: 900px) {
+  .mesas { grid-template-columns: repeat(auto-fill, minmax(6.4rem, 7.8rem)); gap: .6rem; padding: .25rem; }
+  .mesa { padding: .6rem .6rem .5rem; gap: .3rem; }
+  .mesa .m-cab { gap: .4rem; }
+  .mesa .m-cab img { width: 1.35rem; height: 1.35rem; }
+  .mesa .m-cab b { font-size: .8rem; }
+  .mesa .m-valor { font-size: 1.05rem; }
+  .mesa .m-accion { font-size: .7rem; }
+}
+
+/* Mesa seleccionada: celeste, para que no se confunda con libre, reservada u ocupada */
+:root:not([data-theme="oscuro"]) body.pedidos { --sel: #7FC4CE; --sel-texto: #121E42; }
+:root[data-theme="oscuro"] body.pedidos { --sel: #9DB5F0; --sel-texto: #0A1230; }
+.mesa.sel { background: var(--sel); color: var(--sel-texto); border-color: var(--sel-texto); border-style: solid; box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--sel-texto); }
+.mesa.sel small, .mesa.sel .m-valor.libre, .mesa.sel .m-accion { color: var(--sel-texto); opacity: 1; }
+.mesa.sel img { filter: none !important; }
+
+/* Tarjeta de producto: foto, nombre, precio y cantidad */
+.productos { grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); }
+.producto { grid-template-rows: auto 1fr auto auto; gap: .5rem; min-height: 0; padding: .65rem .65rem .75rem; cursor: pointer; }
+.producto b { padding-right: 0; font-size: .95rem; line-height: 1.25; align-self: start; }
+.producto .foto { width: 100%; height: 5.4rem; border-radius: 10px; background: var(--bloque, #F6F6F6); object-fit: contain; display: block; }
+.producto .foto.sin { display: grid; place-items: center; align-content: center; gap: .2rem; background: var(--bloque); border: 1px dashed var(--marco); color: var(--muted); }
+.producto .foto.sin svg { width: 1.9rem; height: 1.9rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.producto .foto.sin span { font-size: .72rem; font-weight: 600; }
+.pie-prod { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.producto .precio { padding: .25rem .6rem; }.paso-prod button { width: 2.2rem; height: 2.2rem; border: 1px solid var(--marco); background: var(--cristal); color: var(--text); border-radius: 50%; font: inherit; font-size: 1.15rem; font-weight: 700; line-height: 1; cursor: pointer; padding: 0; display: grid; place-items: center; }.paso-prod button:hover:not(:disabled) { background: var(--primary); color: var(--primary-ink); }
+.paso-prod { display: inline-flex; align-items: center; gap: .15rem; border: 1px solid var(--marco); border-radius: 999px; padding: .15rem; background: var(--cristal); }
+.paso-prod button { border-color: transparent; background: transparent; width: 2rem; height: 2rem; }
+.paso-prod button:disabled { opacity: .35; cursor: not-allowed; }
+.paso-prod span { min-width: 1.6rem; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.producto[aria-disabled="true"] { opacity: .6; border-style: dashed; cursor: default; }
+.producto:focus-visible { outline: 3px solid var(--secondary); outline-offset: 2px; }
+.producto .precio { white-space: nowrap; }
+.pie-prod { flex-wrap: wrap; row-gap: .45rem; }.paso-prod { margin-left: auto; }
+
+/* Las filas miden lo que mide su contenido; el scroll lo da .productos */
+.productos { grid-auto-rows: max-content; }
+.producto { min-height: 11.5rem; align-self: start; }
+
+/* Toda la carta (mesas, búsqueda, categorías y productos) se desplaza junta */
+.carta { overflow-y: auto; }
+.carta > * { flex-shrink: 0; }
+.productos { flex: 0 0 auto; min-height: 0; overflow: visible; margin: 0; padding: .3rem .3rem .8rem; }
+
+/* Todas las tarjetas iguales: precio arriba, cantidad (0 si no hay) abajo */
+.producto { align-self: stretch; }
+.pie-prod { flex-direction: column; align-items: stretch; }
+.pie-prod .precio { align-self: flex-start; }
+.pie-prod .paso-prod { align-self: flex-end; margin-left: 0; }
+.producto { min-height: 16rem; }
+
+/* Buscador y categorías se quedan arriba cuando el scroll llega a ellos */
+.carta-barra { position: sticky; top: -.5rem; z-index: 5; background: var(--bg); padding: .6rem .3rem .7rem; margin: 0 -.3rem; border-bottom: 1px solid var(--line); }
+
+/* Lo despachado, en azul */
+.linea .badge-ok { background: var(--marco); color: var(--bg); padding: .15rem .65rem; border-radius: 999px; font-weight: 600; }
+.linea .badge-ok::before { background: var(--bg); }
+
+/* Categorías fijas arriba de la carta; el buscador sube al encabezado */
+.carta-barra { position: sticky; top: -.5rem; z-index: 5; height: auto !important; background: var(--bg); padding: .5rem .3rem .6rem; margin: 0 -.3rem; border-bottom: 1px solid var(--line); }
+.barra-in { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; }
+.barra-in .search { flex: 0 1 17rem; position: relative; margin: 0; }
+body.barra-arriba .barra-in .search { position: fixed; z-index: 20; flex: none; }
+
+/* Pantallas angostas: página normal que baja completa (carta y luego ticket), sin alto fijo */
+@media (max-width: 960px) {
+  .carta { overflow: visible; }
+  .pos { grid-template-rows: none; }
+  .ticket { min-height: 0; }
+}
+
+/* Ticket: todo se desplaza, salvo el total con el botón de cobrar, que queda como un widget fijo al pie */
+.ticket { overflow: hidden; }
+.ticket-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: var(--c5) transparent; }
+.ticket-scroll::-webkit-scrollbar { width: 10px; }
+.ticket-scroll::-webkit-scrollbar-thumb { background: var(--c5); border-radius: 999px; border: 2px solid transparent; background-clip: content-box; }
+.ticket-scroll .lineas { flex: none; overflow: visible; min-height: 0; }
+.ticket-scroll .ticket-pie { border-top: 1px dashed var(--marco); padding: .8rem 1.1rem 1rem; }
+.ticket-total { flex: none; display: grid; gap: .5rem; padding: .8rem 1.1rem 1rem; border-top: 1px solid var(--marco); background: var(--cristal); box-shadow: 0 -8px 10px -8px rgba(18, 30, 66, .25); }
+.ticket-total .total-line.big { background: var(--bloque); border-radius: 12px; padding: .6rem .9rem; font-size: 1.35rem; font-weight: 700; border-top: 0; margin: 0; }
+.ticket-total .btn { min-height: 3rem; font-size: 1rem; border-color: var(--marco); border-radius: 12px; }
+.ticket-total .btn-primary { background: var(--primary); color: var(--primary-ink); }
+.ticket-total .btn[disabled] { background: var(--bloque); color: var(--muted); border-color: var(--line); opacity: 1; }
+.ticket-total .motivo { margin: 0; text-align: center; font-size: .8rem; color: var(--muted); }
+.ticket-total .motivo:empty { display: none; }
+
+/* Canasta y panel del ticket (solo en pantallas angostas) */
+.canasta, .ticket-fondo, .cerrar-ticket { display: none; }
+@media (max-width: 960px) {
+  .canasta { position: fixed; right: 1rem; bottom: 1rem; z-index: 30; display: flex; align-items: center; gap: .7rem; padding: .6rem 1.1rem .6rem .9rem; font: inherit; color: var(--primary-ink); background: var(--primary); border: 1px solid var(--marco); border-radius: 999px; box-shadow: 0 6px 18px rgba(18, 30, 66, .35); cursor: pointer; }
+  .canasta svg { width: 1.6rem; height: 1.6rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .canasta-info { display: grid; text-align: left; line-height: 1.2; }
+  .canasta-info b { font-size: .8rem; font-weight: 600; opacity: .85; }
+  .canasta-info span { font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .canasta-n { position: absolute; top: -.45rem; left: -.3rem; min-width: 1.5rem; height: 1.5rem; padding: 0 .35rem; display: grid; place-items: center; border-radius: 999px; background: var(--bg); color: var(--text); border: 1px solid var(--marco); font-size: .8rem; font-weight: 700; }
+  body.ticket-abierto .canasta { display: none; }
+  .ticket { position: fixed; left: 0; right: 0; top: auto; bottom: 0; z-index: 41; max-height: 88vh; border-radius: 18px 18px 0 0; background: var(--bg); transform: translateY(105%); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; box-shadow: 0 -10px 30px rgba(18, 30, 66, .3); }
+  body.ticket-abierto .ticket { transform: none; visibility: visible; transition: transform .25s ease; }
+  .ticket-fondo { position: fixed; inset: 0; z-index: 40; background: rgba(18, 30, 66, .45); opacity: 0; pointer-events: none; transition: opacity .25s ease; display: block; }
+  body.ticket-abierto .ticket-fondo { opacity: 1; pointer-events: auto; }
+  .cerrar-ticket { display: inline-flex; }
+  .carta { padding-bottom: 6rem; }
+}
+@media (prefers-reduced-motion: reduce) { .ticket, .ticket-fondo { transition: none !important; } }
+
+/* Despachado: punto azul y texto, igual que los demás estados, sin píldora */
+.linea .badge-ok { background: none; color: var(--text); padding: 0; border-radius: 0; font-size: .82rem; font-weight: 700; }
+.linea .badge-ok::before { background: var(--marco); width: 9px; height: 9px; }
+
+/* Pantallas angostas: nombre de la mesa, buscador y categorías se quedan fijos arriba al bajar */
+.barra-mesa { display: none; }
+@media (max-width: 960px) {
+  .carta-barra { position: sticky; top: 0 !important; z-index: 25; margin: 0 -.5rem; padding: .55rem .5rem .6rem; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .barra-in { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .5rem .8rem; }
+  .barra-mesa { display: block; font-family: Poppins, Inter, sans-serif; font-size: .95rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text); white-space: nowrap; }
+  .barra-in .search { flex: none; width: auto; min-width: 0; }
+  .barra-in .chip { flex: none; }
+}
+
+/* En celular la barra superior de la app (menú y logo) también es fija: la nuestra se pega justo debajo */
+@media (max-width: 860px) {
+  body.pedidos .topbar { height: 55px; box-sizing: border-box; }
+  .carta-barra { top: 55px !important; }
+}
+
+/* Foto más alta y precio junto a la cantidad */
+.productos { grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
+.producto .foto { height: 8.5rem; }
+.pie-prod { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: .4rem; }
+.pie-prod .precio { align-self: center; padding: .2rem .5rem; font-size: .88rem; }
+.pie-prod .paso-prod { align-self: center; margin-left: auto; }
+.paso-prod button { width: 1.8rem; height: 1.8rem; }
+.paso-prod span { min-width: 1.2rem; }
+.producto { min-height: 0; }
+.producto { min-height: 16.2rem; }
+
+/* "Pedido mesa N" como botón que abre la lista de mesas */
+.titulo-mesa { display: inline-flex; align-items: center; gap: .4rem; padding: 0; margin: 0; border: 0; background: none; font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; }
+.titulo-mesa svg { width: 1rem; height: 1rem; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+.titulo-mesa[aria-expanded="true"] svg { transform: rotate(180deg); }
+.titulo-mesa:hover svg, .titulo-mesa:focus-visible svg { opacity: 1; }
+.encabezado .intro .titulo-mesa { font-weight: 300; }
+.lista-mesas { position: fixed; z-index: 60; max-height: min(70vh, 28rem); overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(8.4rem, 1fr)); gap: .6rem; padding: .7rem; background: var(--bg); border: 1px solid var(--marco); border-radius: 16px; box-shadow: 0 16px 36px rgba(18, 30, 66, .3); }
+.lista-mesas[hidden] { display: none; }
+.item-mesa { display: flex; flex-direction: column; gap: .3rem; min-width: 0; padding: .65rem .75rem; font: inherit; text-align: left; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 14px; cursor: pointer; }
+.item-mesa:hover { box-shadow: 0 0 0 2px var(--primary-soft), 0 0 0 3px var(--marco); }
+.im-cab { display: flex; align-items: center; gap: .45rem; }
+.im-cab img { width: 1.3rem; height: 1.3rem; flex: none; }
+.im-cab b { font-size: .88rem; letter-spacing: .03em; }
+.im-valor { font-size: 1.02rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.im-valor.libre { color: var(--muted); }
+.im-sub { font-size: .76rem; opacity: .75; }
+.item-mesa.est-OCUPADA { background: var(--primary); color: var(--primary-ink); border-color: var(--primary); }
+.item-mesa.est-OCUPADA .im-cab img { filter: brightness(0) invert(1); }
+:root[data-theme="oscuro"] .item-mesa.est-OCUPADA .im-cab img { filter: none; }
+.item-mesa.est-RESERVADA { background: var(--bloque); }
+.item-mesa.sel { background: var(--sel, #7FC4CE); color: var(--text); border-color: var(--marco); box-shadow: 0 0 0 3px var(--primary-soft), 0 0 0 5px var(--marco); }
+.item-mesa.sel .im-valor.libre { color: var(--text); }
+.item-mesa.sel .im-cab img { filter: none; }
+@media (max-width: 960px) { .barra-mesa { font-size: .85rem; } }
+
+.titulo-mesa.barra-mesa { display: none; }
+@media (max-width: 960px) {
+  .titulo-mesa.barra-mesa { display: inline-flex; font-family: Poppins, Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+}
+.barra-in .chip { flex: none; }
+
+/* Las mesas se eligen desde "Pedido mesa N" en el encabezado; las tarjetas ya no se muestran */
+.mesas-wrap { display: none; }
+
+body.pedidos .encabezado { min-height: 42px; }
+
+/* Categorías: sin scroll horizontal, se acomodan en varias filas y son un poco más compactas */
+.barra-in .chips, body.pedidos .barra-in .chips { flex-wrap: wrap; overflow: visible; gap: .4rem; padding: .1rem 0; }
+.barra-in .chip { flex: 0 0 auto; min-height: 34px; padding: .15rem .85rem; font-size: .82rem; }
+@media (max-width: 960px) {
+  .barra-in .chips { grid-column: 1 / -1; flex-wrap: wrap; overflow: visible; }
+}
+
+/* Pantalla grande: el ticket sube hasta el borde de arriba, a la altura del título; la carta queda a su izquierda */
+@media (min-width: 961px) {
+  body.pedidos .main { display: grid; grid-template-columns: minmax(0, 1fr) 25rem; grid-template-rows: auto minmax(0, 1fr); column-gap: 1.2rem; row-gap: .9rem; align-content: stretch; }
+  body.pedidos .encabezado { grid-column: 1; grid-row: 1; }
+  body.pedidos .pos { display: contents; }
+  body.pedidos .carta { grid-column: 1; grid-row: 2; }
+  body.pedidos .ticket { grid-column: 2; grid-row: 1 / span 2; min-height: 0; }
+}
+@media (min-width: 961px) and (max-width: 1100px) {
+  body.pedidos .main { grid-template-columns: minmax(0, 1fr) 20rem; }
+}
+
+.ticket-etiqueta { margin: 0 0 .15rem; font-family: Poppins, Inter, sans-serif; font-size: .78rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+/* Etiqueta del ticket: icono de recibo en un cuadro marino y la palabra con letras espaciadas */
+.ticket-etiqueta { display: inline-flex; align-items: center; gap: .55rem; margin: 0 0 .4rem; font-size: .8rem; font-weight: 600; letter-spacing: .22em; color: var(--text); }
+.ticket-icono { display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 9px; background: var(--primary); color: var(--primary-ink); }
+.ticket-icono svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* La palabra Ticket va por fuera de la caja, a la altura del título; dentro solo en el panel de celular */
+.ticket-etiqueta.fuera { display: none; }
+@media (min-width: 961px) {
+  .ticket-etiqueta.fuera { display: inline-flex; grid-column: 2; grid-row: 1; align-self: center; justify-self: start; margin: 0; }
+  .ticket-etiqueta.dentro { display: none; }
+  body.pedidos .ticket { grid-row: 2; }
+}
+
+/* Celular: el ticket se abre flotando en el centro, con el fondo oscurecido */
+.otro-producto, .cerrar-ticket { display: none; }
+@media (max-width: 960px) {
+  .ticket { left: 50%; right: auto; top: 50%; bottom: auto; width: min(34rem, calc(100vw - 1.6rem)); max-height: calc(100vh - 3rem); border-radius: 20px; transform: translate(-50%, -46%) scale(.96); opacity: 0; box-shadow: 0 24px 60px rgba(10, 18, 48, .45); transition: transform .22s ease, opacity .22s ease, visibility 0s linear .22s; }
+  body.ticket-abierto .ticket { transform: translate(-50%, -50%); opacity: 1; transition: transform .22s ease, opacity .22s ease; }
+  .ticket-fondo { background: rgba(10, 18, 48, .62); backdrop-filter: blur(2px); }
+  .ticket-cab { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .3rem .8rem; }
+  .ticket-cab > div { display: contents; }
+  .ticket-etiqueta.dentro { grid-area: 1 / 1; margin: 0; }
+  .cerrar-ticket { grid-area: 1 / 2; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; padding: 0; background: var(--cristal); color: var(--text); border: 1px solid var(--marco); border-radius: 50%; cursor: pointer; }
+  .cerrar-ticket svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  #titulo-pedido { grid-area: 2 / 1; }
+  #estado-pedido { grid-area: 2 / 2; }
+  #sub-pedido { grid-area: 3 / 1 / 4 / 3; }
+  .otro-producto { display: flex; align-items: center; justify-content: center; gap: .5rem; margin: .4rem 1.1rem .9rem; padding: .7rem 1rem; font: inherit; font-weight: 600; color: var(--text); background: none; border: 1.5px dashed var(--marco); border-radius: 12px; cursor: pointer; }
+  .otro-producto svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+  .otro-producto:hover { background: var(--primary-soft); }
+}
+@media (max-width: 960px) { .cerrar-ticket { justify-self: end; } #estado-pedido { justify-self: end; } }
+
+/* El ticket flotante y su fondo oscuro van por encima de la barra superior de la app */
+@media (max-width: 960px) {
+  .ticket-fondo { z-index: 70; }
+  .ticket { z-index: 71; }
+}
+
+/* Celular: la X va por fuera de la tarjeta, arriba a la derecha, siempre visible; la tarjeta queda más estrecha */
+@media (max-width: 960px) {
+  .ticket { overflow: visible; width: min(30rem, calc(100vw - 2.4rem)); max-height: calc(100vh - 8rem); }
+  .ticket-scroll { border-radius: 20px 20px 0 0; }
+  .ticket-total { border-radius: 0 0 20px 20px; }
+  .cerrar-ticket { position: absolute; top: -3.2rem; right: 0; grid-area: auto; width: 2.6rem; height: 2.6rem; background: var(--bg); color: var(--text); border: 0; box-shadow: 0 4px 14px rgba(10, 18, 48, .4); z-index: 2; }
+  .ticket-cab { grid-template-columns: 1fr auto; }
+  .ticket-etiqueta.dentro { grid-area: 1 / 1; }
+  #estado-pedido { grid-area: 1 / 2; }
+  #titulo-pedido { grid-area: 2 / 1 / 3 / 3; }
+  #sub-pedido { grid-area: 3 / 1 / 4 / 3; }
+}
+
+/* Total más pequeño */
+.ticket-total { gap: .4rem; padding: .6rem 1.1rem .75rem; }
+.ticket-total .total-line.big { padding: .35rem .8rem; font-size: 1.05rem; border-radius: 10px; }
+.ticket-total .btn { min-height: 2.5rem; font-size: .95rem; border-radius: 10px; }
+.ticket-total .motivo { font-size: .76rem; }
+
+/* Confirmar al quitar un producto */
+.dlg-quitar { width: min(24rem, calc(100vw - 2rem)); padding: 1.2rem 1.3rem; border: 1px solid var(--marco); border-radius: 16px; background: var(--bg); color: var(--text); }
+.dlg-quitar::backdrop { background: rgba(10, 18, 48, .6); }
+.dlg-quitar h2 { margin: 0 0 .4rem; font-size: 1.1rem; }
+.dlg-quitar p { margin: 0 0 1rem; color: var(--muted); }
+.q-botones { display: flex; gap: .6rem; justify-content: flex-end; }
+.q-botones .btn { border-color: var(--marco); border-radius: 10px; min-height: 2.6rem; }
+.q-botones .btn-primary { background: var(--primary); color: var(--primary-ink); }
+
+/* Celular: la carta en dos columnas para ver más productos sin desplazarse tanto */
+@media (max-width: 560px) {
+  .productos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .producto { min-height: 0; padding: .5rem; }
+  .producto .foto { height: 4.6rem; }
+  .producto .nombre, .producto h3 { font-size: .85rem; }
+  .pie-prod { flex-wrap: wrap; gap: .4rem; }
+  .pie-prod .precio { font-size: .8rem; }
+  .pie-prod .paso-prod { margin-left: 0; width: 100%; justify-content: space-between; }
+}
+
+/* Área de mesas: no cobra, solo toma el pedido */
+body.sin-cobro #btn-cobrar, body.sin-cobro #motivo-cobro { display: none; }
+body.sin-despacho #btn-despachar-todo, body.sin-despacho [data-accion="despachar"] { display: none !important; }
+
+.dlg-confirmar { width: min(28rem, calc(100vw - 2rem)); }
+.cf-lista { list-style: none; margin: 0 0 .8rem; padding: 0; display: grid; gap: .45rem; max-height: 40vh; overflow-y: auto; }
+.cf-lista li { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: .4rem; border-bottom: 1px dashed var(--marco); font-size: .95rem; }
+.cf-lista small { display: block; color: var(--muted); }
+.dlg-confirmar .cf-total { margin: 0 0 .4rem; color: var(--text); font-weight: 700; }
+#btn-enviar { margin-bottom: .5rem; }

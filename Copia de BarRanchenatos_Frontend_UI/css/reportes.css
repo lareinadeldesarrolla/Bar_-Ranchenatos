@@ -1,0 +1,41 @@
+/* Reportes: cuadro de mando integral, ventas, estados de cuenta, inventario y clientes con los indicadores de Inicio. */
+.tablero[hidden], .estado-cuenta[hidden] { display: none; }
+.seccion-t { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem 1rem; padding: .3rem 0 .3rem .8rem; border-left: 4px solid var(--primary); }
+.seccion-t h2 { margin: 0; font: 600 1rem/1.2 Poppins, Inter, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+.seccion-t p { margin: 0; font-size: .85rem; color: var(--muted); }
+.res-filtros#r-vistas { margin-bottom: .5rem; }
+
+/* Estados de cuenta */
+.estado-cuenta { display: grid; gap: 1rem; align-content: start; }
+.ec-barra { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; }
+.ec-barra select { min-height: 40px; padding: 0 .8rem; font: inherit; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 999px; max-width: 100%; }
+.ec-cab { display: grid; gap: .2rem; padding: .8rem 1rem; background: var(--bloque); border-radius: 12px; }
+.ec-cab h3 { margin: 0; font-size: 1.1rem; }
+.ec-cab p { margin: 0; font-size: .85rem; color: var(--muted); }
+.ec-saldo { display: flex; flex-wrap: wrap; gap: .6rem; }
+.ec-saldo div { flex: 1 1 9rem; display: grid; gap: .1rem; padding: .6rem .8rem; text-align: center; background: var(--bloque); border-radius: 12px; }
+.ec-saldo dt { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ec-saldo dd { margin: 0; font-size: 1.2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ec-saldo .ec-fuerte { background: var(--primary); color: var(--primary-ink); }
+.ec-saldo .ec-fuerte dt { color: inherit; opacity: .8; }
+.tg-tot { background: var(--bloque); font-weight: 700; cursor: default; }
+.tg-tot:hover { background: var(--bloque); }
+.tg-fila.tg-sin { cursor: default; }
+.tg-fila.tg-sin:hover { background: none; }
+.tg-num { text-align: right; }
+.tg-cab .tg-der { text-align: right; }
+@media (max-width: 900px) { .tg-num { text-align: left; } }
+@media print { .res-filtros#r-vistas, .encabezado .actions, .ec-barra { display: none !important; } .tablero { overflow: visible !important; height: auto !important; } }
+@media (max-width: 760px) { .res-filtros#r-vistas { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } .res-filtros#r-vistas::-webkit-scrollbar { display: none; } #r-vistas .chip-filtro { flex: none; } }
+
+/* Reportes: los bloques llenan cada fila (sin huecos) y se acomodan solos al ancho de la pantalla */
+.r-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; }
+.tablero.fluido { display: flex; flex-wrap: wrap; align-items: stretch; align-content: flex-start; gap: 1rem; }
+.fluido .ind { grid-column: auto; flex: var(--ancho) 1 calc(var(--ancho) / 12 * 100% - 1rem); min-width: min(100%, 17rem); }
+.fluido .ind.kpi { min-width: min(100%, 12rem); }
+.fluido .seccion-t { flex: 1 1 100%; }
+.vista-rapida { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem .6rem; }
+.seg-mini .seg { min-height: 30px; padding: 0 .8rem; font-size: .78rem; }
+.vista-rapida select { min-height: 32px; max-width: 100%; padding: 0 .6rem; font: inherit; font-size: .78rem; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 999px; }
+@media (max-width: 760px) { .r-barra #r-como { width: 100%; } .r-barra #r-como .seg { flex: 1 1 50%; } .fluido .ind { flex-basis: 100%; } .fluido .ind.kpi { flex-basis: calc(50% - .5rem); min-width: 9rem; } }
+@media print { .vista-rapida, #r-como { display: none !important; } }

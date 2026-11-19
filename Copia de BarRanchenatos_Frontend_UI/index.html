@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bar Ranchenatos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/tema.css">
+  <link rel="stylesheet" href="css/inicio.css">
+
+  <script>
+    try {
+      if (localStorage.getItem('tema')) {
+        document.documentElement.setAttribute(
+          'data-theme',
+          localStorage.getItem('tema')
+        );
+      }
+    } catch (e) {
+      // Sin memoria del navegador
+    }
+  </script>
+</head>
+
+<body class="tema selector">
+
+  <main class="bienvenida" id="contenido">
+
+    <header class="bienvenida-marca">
+      <img src="assets/ranchenatos_isotipo.svg" alt="Logo Ranchenatos">
+      <p>RANCHENATOS</p>
+    </header>
+
+    <section class="bienvenida-contenido">
+
+      <h1>Bienvenido a Bar Ranchenatos</h1>
+
+      <p class="bienvenida-ayuda">
+        Un lugar para compartir buenos momentos.
+        Selecciona cómo deseas ingresar.
+      </p>
+
+      <div class="opciones-acceso">
+
+        <a href="administracion/acceso.html" class="opcion-acceso">
+          <span class="opcion-icono">
+            <img src="icons/inicio/usuario.svg" alt="">
+          </span>
+
+          <h2>Administración</h2>
+
+          <p>
+            Ingresa al sistema administrativo para gestionar
+            las mesas, pedidos, cocina, bar, ventas y demás áreas.
+          </p>
+
+          <span class="opcion-enlace">Ingresar como administrador</span>
+        </a>
+
+        <article class="opcion-acceso opcion-cliente">
+        
+          <span class="opcion-icono">
+            <img src="icons/inicio/nuevo_pedido.svg" alt="">
+          </span>
+        
+          <h2>Cliente</h2>
+        
+          <p>
+            Consulta nuestra carta, realiza tus pedidos
+            y disfruta de nuestros servicios.
+          </p>
+        
+          <div class="opcion-acciones">
+        
+            <a href="clientes/registro.html" class="opcion-enlace">
+              Registrarme
+            </a>
+        
+            <a href="clientes/ingreso.html" class="opcion-enlace opcion-secundario">
+              Ya tengo una cuenta
+            </a>
+        
+          </div>
+        
+        </article>
+
+      </div>
+
+    </section>
+
+    <footer class="bienvenida-pie">
+      <p>Bar Ranchenatos · Tradición, música y sabor</p>
+    </footer>
+
+  </main>
+
+</body>
+
+</html>

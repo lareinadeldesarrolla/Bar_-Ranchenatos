@@ -1,0 +1,27 @@
+/* Alertas, notificaciones y campana de avisos */
+.avisos-caja { position: fixed; z-index: 100; top: .8rem; right: .8rem; display: grid; gap: .5rem; width: min(24rem, calc(100% - 1.6rem)); pointer-events: none; }
+.aviso-toast { pointer-events: auto; display: flex; align-items: center; gap: .7rem; padding: .7rem .8rem .7rem 1rem; color: var(--text); background: var(--surface); border: 1.5px solid var(--marco); border-radius: 14px; box-shadow: 0 8px 24px rgba(18, 30, 66, .3); animation: aviso-entra .25s ease; }
+.aviso-comanda { color: var(--primary-ink); background: var(--primary); border-color: var(--primary); animation: aviso-entra .25s ease, aviso-late 1s ease 3; }
+.aviso-cuerpo { flex: 1; min-width: 0; display: grid; gap: .1rem; font-size: .9rem; overflow-wrap: anywhere; }
+.aviso-cuerpo b { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+.aviso-toast .btn { flex: none; min-height: 2.2rem; border-radius: 10px; }
+.aviso-comanda .btn { background: var(--primary-ink); color: var(--primary); border-color: var(--primary-ink); }
+.aviso-x { flex: none; width: 2rem; height: 2rem; padding: 0; font-size: 1.4rem; line-height: 1; color: inherit; background: none; border: 0; border-radius: 50%; cursor: pointer; opacity: .7; }
+@keyframes aviso-entra { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes aviso-late { 50% { transform: scale(1.03); } }
+@media (prefers-reduced-motion: reduce) { .aviso-toast, .aviso-comanda { animation: none; } }
+
+.campana { position: relative; flex: none; width: 2.5rem; height: 2.5rem; padding: 0; display: inline-grid; place-items: center; color: var(--text); background: var(--cristal); border: 1px solid var(--marco); border-radius: 50%; cursor: pointer; }
+.campana svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.campana.con-avisos { color: var(--primary-ink); background: var(--primary); border-color: var(--primary); }
+.campana-n { position: absolute; top: -.3rem; right: -.3rem; min-width: 1.15rem; height: 1.15rem; padding: 0 .25rem; box-sizing: border-box; font: 700 .68rem/1.15rem Inter, sans-serif; font-style: normal; text-align: center; color: #121E42; background: var(--sel, #7FC4CE); border-radius: 999px; }
+.campana-n[hidden] { display: none; }
+.utilidades { display: inline-flex; flex: none; gap: .5rem; margin-left: auto; }
+.utilidades.flotante { position: fixed; z-index: 40; top: .7rem; right: .8rem; margin: 0; }
+.encabezado > .utilidades { order: 99; }
+.tema-btn.con-avisos { color: var(--text); background: var(--cristal); border-color: var(--marco); }
+.avisos-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; max-height: 50vh; overflow-y: auto; text-align: left; }
+.avisos-lista li { display: grid; grid-template-columns: 3.2rem 1fr; gap: .5rem; padding: .45rem .6rem; font-size: .88rem; border-radius: 10px; }
+.avisos-lista li.nuevo { background: var(--primary-soft); font-weight: 600; }
+.avisos-lista li span:first-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+.encabezado .actions + .utilidades { margin-left: .5rem; }

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="js/area.js"></script>
+    <title>Mesas · Bar Ranchenatos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="css/styles.css?v=1792166594" />
+    <link rel="stylesheet" href="css/inicio.css?v=1792166594" />
+    <link rel="stylesheet" href="css/mesas.css?v=1792166616" />
+  </head>
+  <body class="inicio mesas-pag">
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <div class="shell">
+      <header class="topbar">
+        <button
+          class="icon-btn"
+          id="btn-menu"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="sidebar"
+        >
+          ☰
+        </button>
+        <img src="assets/ranchenatos_isotipo.svg" alt="" />
+        <strong>Ranchenatos</strong>
+      </header>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <img
+            src="assets/ranchenatos_isotipo.svg"
+            alt="Logo Ranchenatos"
+          /><span>RANCHENATOS</span>
+        </div>
+        <nav aria-label="Principal">
+          <div class="nav-label">Operación</div>
+          <ul class="nav">
+            <li>
+              <a href="inicio.html"
+                ><img class="ico" src="icons/inicio.svg" alt="" />Inicio</a
+              >
+            </li>
+            <li>
+              <a href="pedidos.html"
+                ><img class="ico" src="icons/pedidos.svg" alt="" />Pedidos</a
+              >
+            </li>
+            <li>
+              <a href="mesas.html" aria-current="page"
+                ><img class="ico" src="icons/mesas.svg" alt="" />Mesas</a
+              >
+            </li>
+            <li>
+              <a href="reservas.html"
+                ><img
+                  class="ico"
+                  src="icons/reserva.svg"
+                  alt=""
+                />Reservaciones</a
+              >
+            </li>
+            <li>
+              <a href="despacho.html"
+                ><img
+                  class="ico"
+                  src="icons/inicio/en_preparacion.svg"
+                  alt=""
+                />Despacho</a
+              >
+            </li>
+            <li>
+              <a href="caja.html"
+                ><img class="ico" src="icons/efectivo.svg" alt="" />Caja</a
+              >
+            </li>
+          </ul>
+          <div class="nav-label">Catálogo</div>
+          <ul class="nav">
+            <li>
+              <a href="productos.html"
+                ><img class="ico" src="icons/productos.svg" alt="" />Productos y
+                recetas</a
+              >
+            </li>
+            <li>
+              <a href="inventario.html"
+                ><img
+                  class="ico"
+                  src="icons/inventario.svg"
+                  alt=""
+                />Inventario<span class="count" aria-label="1 alerta"
+                  >1</span
+                ></a
+              >
+            </li>
+            <li>
+              <a href="eventos.html"
+                ><img class="ico" src="icons/calendario.svg" alt="" />Eventos y
+                promociones</a
+              >
+            </li>
+          </ul>
+          <div class="nav-label">Gestión</div>
+          <ul class="nav">
+            <li>
+              <a href="clientes.html"
+                ><img class="ico" src="icons/clientes.svg" alt="" />Clientes</a
+              >
+            </li>
+            <li>
+              <a href="reportes.html"
+                ><img class="ico" src="icons/reportes.svg" alt="" />Reportes</a
+              >
+            </li>
+            <li>
+              <a href="usuarios.html"
+                ><img class="ico" src="icons/usuarios.svg" alt="" />Usuarios y
+                roles</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="userbox">
+          <strong>Carlos Ranchenatos</strong>Administrador
+          <button class="btn btn-sm" id="btn-tema" type="button">
+            Modo claro u oscuro
+          </button>
+          <button class="enlace" id="btn-reiniciar" type="button">
+            Restablecer datos de ejemplo
+          </button>
+        </div>
+      </aside>
+
+      <main class="main" id="contenido">
+        <header class="encabezado">
+          <h1 class="sr-only">Mesas</h1>
+          <h2 class="sr-only">
+            Plano del salón, mesas, reservaciones y administración de mesas
+          </h2>
+          <p class="intro">Mesas</p>
+          <div
+            class="filtros-mesas"
+            id="filtros-mesas"
+            role="group"
+            aria-label="Filtrar mesas"
+          ></div>
+          <div class="actions">
+            <a
+              class="btn btn-icono"
+              id="btn-administrar"
+              href="mesas-admin.html"
+              aria-label="Administrar mesas"
+              title="Administrar mesas"
+              ><svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="3.2" />
+                <path
+                  d="M19.4 13.5a7.5 7.5 0 0 0 0-3l1.9-1.5-1.9-3.3-2.3.9a7.5 7.5 0 0 0-2.6-1.5L14.1 2.6H9.9l-.4 2.5a7.5 7.5 0 0 0-2.6 1.5l-2.3-.9-1.9 3.3L4.6 10.5a7.5 7.5 0 0 0 0 3l-1.9 1.5 1.9 3.3 2.3-.9a7.5 7.5 0 0 0 2.6 1.5l.4 2.5h4.2l.4-2.5a7.5 7.5 0 0 0 2.6-1.5l2.3.9 1.9-3.3z"
+                /></svg
+            ></a>
+          </div>
+        </header>
+        <div class="tablero" id="tablero" aria-live="polite"></div>
+
+        <dialog
+          class="hoja-ind"
+          id="dlg-personalizar"
+          aria-labelledby="p-titulo"
+        >
+          <header class="p-cab">
+            <h2 id="p-titulo">Personalizar Mesas</h2>
+            <button type="button" class="btn btn-sm" id="p-cerrar">
+              Cerrar
+            </button>
+          </header>
+          <div class="p-tipo" role="group" aria-label="Qué configurar">
+            <button type="button" data-tipo="operacion" aria-pressed="true">
+              Operación <small>mesas, áreas, administración</small></button
+            ><button type="button" data-tipo="indicadores" aria-pressed="false">
+              Indicadores <small>mesas, puestos, áreas</small>
+            </button>
+          </div>
+          <div class="p-cols">
+            <section aria-labelledby="p-h1">
+              <h3 id="p-h1">
+                En pantalla
+                <small
+                  >(Mesas los muestra en este orden, mezclados con el otro
+                  grupo)</small
+                >
+              </h3>
+              <ol id="p-visibles"></ol>
+            </section>
+            <section aria-labelledby="p-h2">
+              <h3 id="p-h2">Disponibles</h3>
+              <div class="p-filtros" id="p-filtros">
+                <label class="sr-only" for="p-grupo">Grupo</label
+                ><select id="p-grupo"></select
+                ><label class="sr-only" for="p-buscar">Buscar indicador</label
+                ><input
+                  id="p-buscar"
+                  type="search"
+                  placeholder="Buscar indicador"
+                />
+              </div>
+              <div id="p-disponibles"></div>
+            </section>
+          </div>
+          <details class="p-params">
+            <summary>
+              Datos económicos
+              <small>(para el punto de equilibrio y la rentabilidad)</small>
+            </summary>
+            <div class="p-params-grid" id="p-params">
+              <label
+                >Costos fijos del mes ($)<input
+                  id="par-costosFijos"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  inputmode="numeric"
+                /><small>Arriendo, nómina, servicios, etc.</small></label
+              >
+              <label
+                >Turnos al mes<input
+                  id="par-turnosMes"
+                  type="number"
+                  min="1"
+                  max="31"
+                  inputmode="numeric"
+                  placeholder="26"
+                /><small>Noches que abre el bar</small></label
+              >
+              <label
+                >Horas por turno<input
+                  id="par-horasTurno"
+                  type="number"
+                  min="1"
+                  max="24"
+                  inputmode="numeric"
+                  placeholder="6"
+                /><small>Horas de atención</small></label
+              >
+              <label
+                >Meta de ventas por turno ($)<input
+                  id="par-metaTurno"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  inputmode="numeric"
+                /><small>Para medir el cumplimiento</small></label
+              >
+              <label
+                >Inversión inicial ($)<input
+                  id="par-inversion"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  inputmode="numeric"
+                /><small>Para calcular en cuánto se recupera</small></label
+              >
+            </div>
+          </details>
+          <footer class="p-pie">
+            <span class="p-ejemplo"
+              ><button type="button" class="enlace" id="p-ejemplo">
+                Cargar datos de ejemplo</button
+              ><button type="button" class="enlace" id="p-sin-ejemplo">
+                Quitar datos de ejemplo
+              </button></span
+            >
+            <button type="button" class="btn" id="p-restablecer">
+              Restablecer selección
+            </button>
+          </footer>
+        </dialog>
+
+        <dialog
+          class="dlg-detalle"
+          id="dlg-detalle"
+          aria-label="Detalle de la mesa"
+        >
+          <button
+            type="button"
+            class="cerrar-x"
+            id="d-cerrar"
+            aria-label="Cerrar"
+            title="Cerrar"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+          <div id="d-cuerpo"></div>
+        </dialog>
+
+        <dialog class="dialogo" id="dlg-cuenta" aria-labelledby="c-titulo">
+          <form id="form-cuenta" novalidate>
+            <header class="c-cab">
+              <h2 id="c-titulo">Mesa</h2>
+              <span class="badge" id="c-estado"></span>
+            </header>
+            <ul class="c-lineas" id="c-lineas"></ul>
+            <button type="button" class="btn btn-sm" id="c-despachar" hidden>
+              Despachar lo pendiente
+            </button>
+            <div>
+              <p class="d-total" id="c-total">$ 0</p>
+              <p class="hint" id="c-desglose"></p>
+            </div>
+            <fieldset class="metodos">
+              <legend>¿Cómo paga?</legend>
+              <div id="c-metodos"></div>
+            </fieldset>
+            <div class="field" id="c-campo-ref">
+              <label for="c_referencia">Número de transacción</label
+              ><input
+                id="c_referencia"
+                name="c_referencia"
+                type="text"
+                maxlength="60"
+                disabled
+              />
+              <p class="hint">Obligatorio en pagos electrónicos.</p>
+            </div>
+            <div class="field" id="c-campo-recibido">
+              <label for="c_recibido">Efectivo recibido</label
+              ><input
+                id="c_recibido"
+                name="c_recibido"
+                type="number"
+                min="0"
+                step="1"
+                inputmode="numeric"
+                disabled
+              />
+              <p class="hint" id="c-cambio"></p>
+            </div>
+            <div class="field">
+              <label for="c_promo">Promoción</label
+              ><select id="c_promo" name="c_promo"></select>
+            </div>
+            <div class="d-acciones">
+              <a class="btn" id="c-abrir" href="pedidos.html">Ver en Pedidos</a
+              ><button type="button" class="btn" id="c-cerrar">Cerrar</button
+              ><button type="submit" class="btn btn-primary">
+                Confirmar cobro
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </main>
+    </div>
+    <script src="js/datos.js?v=1792166594"></script>
+    <script src="js/main.js?v=1792166594"></script>
+    <script src="js/indicadores.js?v=1792166594"></script>
+    <script src="js/operacion.js?v=1792166594"></script>
+    <script src="js/mesas-widgets.js?v=1792166594"></script>
+    <script>
+      /* El tablero de Mesas usa el mismo motor de Inicio, con su catálogo, su orden inicial y su propia memoria. */
+      window.PAGINA_TABLERO = {
+        clave: "rn_mesas_v1",
+        fijo: true,
+        orden: ["op_plano"],
+        solo: ["op_plano"],
+      };
+    </script>
+    <script src="js/tablero.js?v=1792166594"></script>
+  </body>
+</html>
